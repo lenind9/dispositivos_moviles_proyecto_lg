@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import com.example.dispmoviles.R
 import com.example.dispmoviles.databinding.ActivityMainBinding
 import com.example.dispmoviles.databinding.ActivitySecondBinding
 import com.google.android.material.snackbar.Snackbar
@@ -20,6 +21,37 @@ class SecondActivity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
+
+        var name : String = ""
+//        intent.extras.let {
+//            name = it?.getString("var1")!!
+//        }
+
+        binding.bottomNavigation.setOnItemSelectedListener { item ->
+            when(item.itemId) {
+                R.id.inicio -> {
+
+                    var suma: Int = 0
+                    for(i in listOf(1, 2, 3)){
+                        suma += i
+                    }
+                    Snackbar.make(binding.buttonBindingView, "La suma es: ${suma}",
+                        Snackbar.LENGTH_LONG).show()
+                    // Respond to navigation item 1 click
+                    true
+                }
+                R.id.favoritos -> {
+                    // Respond to navigation item 2 click
+                    true
+                }
+                R.id.apis -> {
+                    // Respond to navigation item 2 click
+                    true
+                }
+                else -> false
+            }
+        }
+
         initClass()
     }
 
