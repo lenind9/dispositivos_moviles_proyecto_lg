@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.dispmoviles.R
 import com.example.dispmoviles.databinding.ActivityMainBinding
 import com.example.dispmoviles.databinding.ActivitySecondBinding
+import com.example.dispmoviles.ui.fragments.NewFragment
 import com.google.android.material.snackbar.Snackbar
 
 class SecondActivity : AppCompatActivity() {
@@ -31,12 +32,12 @@ class SecondActivity : AppCompatActivity() {
             when(item.itemId) {
                 R.id.inicio -> {
 
-                    var suma: Int = 0
-                    for(i in listOf(1, 2, 3)){
-                        suma += i
-                    }
-                    Snackbar.make(binding.buttonBindingView, "La suma es: ${suma}",
-                        Snackbar.LENGTH_LONG).show()
+                    val frag = NewFragment()
+                    val transaction = supportFragmentManager.beginTransaction()
+                    transaction.add(binding.frmContainer.id, frag)
+                    //cada clic que se haga se añade un fragment a la pila de navegacion del proyecto
+                    transaction.addToBackStack(null)
+                    transaction.commit()
                     // Respond to navigation item 1 click
                     true
                 }
