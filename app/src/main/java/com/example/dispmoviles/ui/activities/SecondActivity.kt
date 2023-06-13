@@ -8,6 +8,7 @@ import com.example.dispmoviles.R
 import com.example.dispmoviles.databinding.ActivityMainBinding
 import com.example.dispmoviles.databinding.ActivitySecondBinding
 import com.example.dispmoviles.ui.fragments.NewFragment
+import com.example.dispmoviles.ui.utilities.FragmentsManager
 import com.google.android.material.snackbar.Snackbar
 
 class SecondActivity : AppCompatActivity() {
@@ -23,30 +24,22 @@ class SecondActivity : AppCompatActivity() {
     override fun onStart() {
         super.onStart()
 
-        var name : String = ""
-//        intent.extras.let {
-//            name = it?.getString("var1")!!
-//        }
+        FragmentsManager().replaceFragment(supportFragmentManager,
+            binding.frmContainer.id, NewFragment())
 
         binding.bottomNavigation.setOnItemSelectedListener { item ->
             when(item.itemId) {
                 R.id.inicio -> {
 
-                    val frag = NewFragment()
-                    val transaction = supportFragmentManager.beginTransaction()
-                    transaction.add(binding.frmContainer.id, frag)
-                    //cada clic que se haga se añade un fragment a la pila de navegacion del proyecto
-                    transaction.addToBackStack(null)
-                    transaction.commit()
-                    // Respond to navigation item 1 click
                     true
                 }
                 R.id.favoritos -> {
-                    // Respond to navigation item 2 click
+                    FragmentsManager().replaceFragment(supportFragmentManager,
+                    binding.frmContainer.id, NewFragment())
                     true
                 }
                 R.id.apis -> {
-                    // Respond to navigation item 2 click
+
                     true
                 }
                 else -> false
@@ -54,6 +47,10 @@ class SecondActivity : AppCompatActivity() {
         }
 
         initClass()
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
     }
 
     fun initClass(){
