@@ -8,6 +8,8 @@ import com.example.dispmoviles.R
 import com.example.dispmoviles.databinding.ActivityMainBinding
 import com.example.dispmoviles.databinding.ActivitySecondBinding
 import com.example.dispmoviles.ui.fragments.NewFragment
+import com.example.dispmoviles.ui.fragments.SecondFragment
+import com.example.dispmoviles.ui.fragments.ThirdFragment
 import com.example.dispmoviles.ui.utilities.FragmentsManager
 import com.google.android.material.snackbar.Snackbar
 
@@ -30,16 +32,18 @@ class SecondActivity : AppCompatActivity() {
         binding.bottomNavigation.setOnItemSelectedListener { item ->
             when(item.itemId) {
                 R.id.inicio -> {
-
+                    FragmentsManager().replaceFragment(supportFragmentManager,
+                        binding.frmContainer.id, NewFragment())
                     true
                 }
                 R.id.favoritos -> {
                     FragmentsManager().replaceFragment(supportFragmentManager,
-                    binding.frmContainer.id, NewFragment())
+                        binding.frmContainer.id, SecondFragment())
                     true
                 }
                 R.id.apis -> {
-
+                    FragmentsManager().replaceFragment(supportFragmentManager,
+                        binding.frmContainer.id, ThirdFragment())
                     true
                 }
                 else -> false

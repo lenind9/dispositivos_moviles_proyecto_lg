@@ -4,10 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.fragments.NewFragment">
+    tools:context=".ui.fragments.SecondFragment">
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/cardView"
+        android:id="@+id/cardView2"
         android:layout_width="330dp"
         android:layout_height="95dp"
         android:layout_marginTop="40dp"
@@ -18,7 +18,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
-            android:id="@+id/imageMiles"
+            android:id="@+id/imageMiles2"
             android:layout_width="87dp"
             android:layout_height="match_parent"
             android:src="@drawable/miles"
@@ -26,34 +26,34 @@
             tools:layout_editor_absoluteY="166dp" />
 
         <TextView
-            android:id="@+id/textViewFrag"
+            android:id="@+id/textViewFrag2"
             android:layout_width="240dp"
             android:layout_height="match_parent"
             android:layout_gravity="right"
             android:background="@color/dark_red"
             android:gravity="center"
-            android:text="Mi primer fragment"
+            android:text="Mi segundo fragment"
             android:textColor="@color/black"
             android:textSize="25sp" />
 
     </androidx.cardview.widget.CardView>
 
     <Spinner
-        android:id="@+id/spinner"
+        android:id="@+id/spinner2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="25dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cardView" />
+        app:layout_constraintTop_toBottomOf="@+id/cardView2" />
 
     <ListView
-        android:id="@+id/listView"
+        android:id="@+id/listView2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="25dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spinner" />
+        app:layout_constraintTop_toBottomOf="@+id/spinner2" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
