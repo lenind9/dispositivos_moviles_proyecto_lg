@@ -50,13 +50,22 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:orientation="horizontal"
         tools:layout_editor_absoluteX="68dp"
         tools:layout_editor_absoluteY="126dp">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvMarvelChars"
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/rvSwipe"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvMarvelChars"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
