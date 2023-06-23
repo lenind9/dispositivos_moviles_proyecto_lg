@@ -59,11 +59,15 @@ class NewFragment : Fragment() {
     }
 
     fun sendMarvelItem(item: MarvelChars) {
+        //Intents solo estan en fragments y activities
         val i = Intent(requireActivity(), DetailsMarvelItem::class.java)
         i.putExtra("name", item)
         startActivity(i)
     }
 
+
+    // Serializacion: pasar de un objeto a un string para poder enviarlo por medio de la web, usa obj JSON
+    // Parceables: Mucho mas eficiente que la serializacion pero su implementacion es compleja, pero existen plugins que nos ayudan
     fun chargeDataRV() {
         val rvAdapter = MarvelAdapter(
             ListItems().returnMarvelChars()

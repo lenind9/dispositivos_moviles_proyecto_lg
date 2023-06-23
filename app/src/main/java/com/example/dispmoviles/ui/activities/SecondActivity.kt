@@ -26,8 +26,38 @@ class SecondActivity : AppCompatActivity() {
     override fun onStart() {
         super.onStart()
 
+        var name: String = ""
+        binding.txtView.text = "Bienvenido $name"
+        Log.d("UCE", "Entrando a Start")
+
+        super.onStart()
         FragmentsManager().replaceFragment(supportFragmentManager,
             binding.frmContainer.id, NewFragment())
+
+
+
+        initClass()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+    }
+
+    fun initClass(){
+        /*Log.d("uce", "Entrando a start")  debug en la terminal*/
+        binding.btnRetorno.setOnClickListener{
+            Log.d("UCE", "Entrando al click de retorno")
+            var intent= Intent(this, ActivityMainBinding::class.java)
+            startActivity(intent)
+
+            /*Snackbar.make(
+                binding.loginSegundo,"regresando",
+                Snackbar.LENGTH_LONG).show()*/
+        }
 
         binding.bottomNavigation.setOnItemSelectedListener { item ->
             when(item.itemId) {
@@ -48,25 +78,6 @@ class SecondActivity : AppCompatActivity() {
                 }
                 else -> false
             }
-        }
-
-        initClass()
-    }
-
-    override fun onBackPressed() {
-        super.onBackPressed()
-    }
-
-    fun initClass(){
-        /*Log.d("uce", "Entrando a start")  debug en la terminal*/
-        binding.btnRetorno.setOnClickListener{
-            Log.d("UCE", "Entrando al click de retorno")
-            var intent= Intent(this, ActivityMainBinding::class.java)
-            startActivity(intent)
-
-            /*Snackbar.make(
-                binding.loginSegundo,"regresando",
-                Snackbar.LENGTH_LONG).show()*/
         }
     }
 }
