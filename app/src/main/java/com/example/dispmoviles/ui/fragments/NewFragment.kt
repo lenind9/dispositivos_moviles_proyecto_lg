@@ -18,6 +18,7 @@ import com.example.dispmoviles.data.marvel.MarvelChars
 import com.example.dispmoviles.databinding.FragmentNewBinding
 import com.example.dispmoviles.logic.jikanLogic.JikanAnimeLogic
 import com.example.dispmoviles.logic.lists.ListItems
+import com.example.dispmoviles.logic.marvelLogic.MarvelLogic
 import com.example.dispmoviles.ui.activities.DetailsMarvelItem
 import com.example.dispmoviles.ui.activities.MainActivity
 import com.example.dispmoviles.ui.adapters.MarvelAdapter
@@ -78,6 +79,7 @@ class NewFragment : Fragment() {
             val rvAdapter = MarvelAdapter(
                 //ListItems().returnMarvelChars()
                 JikanAnimeLogic().getAllAnimes()
+                //MarvelLogic().getMarvelChars()
             )
             //las funciones lambda se llaman con {} y van fuera del parentesis
             { sendMarvelItem(it) }
