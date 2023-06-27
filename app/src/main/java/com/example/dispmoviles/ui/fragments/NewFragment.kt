@@ -84,6 +84,7 @@ class NewFragment : Fragment() {
             //las funciones lambda se llaman con {} y van fuera del parentesis
             { sendMarvelItem(it) }
 
+
             withContext(Dispatchers.Main){
                 with(binding.rvMarvelChars){
                     this.adapter = rvAdapter

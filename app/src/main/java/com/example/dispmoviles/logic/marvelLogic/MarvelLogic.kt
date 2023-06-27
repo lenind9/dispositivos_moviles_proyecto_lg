@@ -12,28 +12,34 @@ class MarvelLogic {
     suspend fun getMarvelChars(name : String, limit : Int): ArrayList<MarvelChars> {
 
         val itemList = arrayListOf<MarvelChars>()
-        val response = ApiConnection.getService(
-            ApiConnection.typeApi.Marvel,
-            MarvelEndpoint::class.java
-        ).getCharactersStartWith(name, limit)
+        try {
+            val response = ApiConnection.getService(
+                ApiConnection.typeApi.Marvel,
+                MarvelEndpoint::class.java
+            ).getCharactersStartWith(name, limit)
 
-        if(response.isSuccessful){
-            response.body()!!.data.results.forEach {
-                var comic : String = "Not available"
-                if (it.comics.items.size > 0) {
-                    comic = it.comics.items[0].name
+            if(response.isSuccessful){
+                response.body()!!.data.results.forEach {
+                    var comic : String = "Not available"
+                    if (it.comics.items.size > 0) {
+                        comic = it.comics.items[0].name
+                    }
+                    val m = MarvelChars(
+                        it.id,
+                        it.name,
+                        comic,
+                        it.thumbnail.path + "." + it.thumbnail.extension
+                    )
+                    itemList.add(m)
                 }
-                val m = MarvelChars(
-                    it.id,
-                    it.name,
-                    comic,
-                    it.thumbnail.path + "." + it.thumbnail.extension
-                )
-                itemList.add(m)
+            } else {
+                Log.d("UCE", response.toString())
             }
-        } else {
-            Log.d("UCE", response.toString())
         }
+        catch (e: Exception){
+            Log.d("UCE", e.message.toString())
+        }
+
         return itemList
     }
 }
