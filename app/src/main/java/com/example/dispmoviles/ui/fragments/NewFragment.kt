@@ -11,6 +11,7 @@ import android.widget.LinearLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.LayoutManager
 import com.example.dispmoviles.R
 import com.example.dispmoviles.data.marvel.MarvelChars
@@ -29,12 +30,21 @@ import kotlinx.coroutines.withContext
 class NewFragment : Fragment() {
 
     private lateinit var binding: FragmentNewBinding
+    private lateinit var lmanager : LinearLayoutManager
+    private var rvAdapter : MarvelAdapter = MarvelAdapter { sendMarvelItem(it) }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
         binding = FragmentNewBinding.inflate(layoutInflater, container, false)
+        lmanager = LinearLayoutManager(
+            requireActivity(),
+            LinearLayoutManager.VERTICAL,
+            false
+        )
+
         return binding.root
     }
 
@@ -56,12 +66,46 @@ class NewFragment : Fragment() {
         )
 
         binding.spinner.adapter = adapter
-        chargeDataRV()
+        chargeDataRV("cap")
 
         binding.rvSwipe.setOnRefreshListener {
-            chargeDataRV()
+            chargeDataRV("cap")
             binding.rvSwipe.isRefreshing = false
         }
+
+        binding.rvMarvelChars.addOnScrollListener(
+            object: RecyclerView.OnScrollListener(){
+                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                    super.onScrolled(recyclerView, dx, dy)
+                    //dy: posicion vertical
+                    if(dy > 0){
+
+                        //cuantos elems han pasado
+                        val v = lmanager.childCount
+                        //mi posicion actual
+                        val p = lmanager.findFirstVisibleItemPosition()
+                        //cuantos elems tengo en total
+                        val t = lmanager.itemCount
+
+                        //si la posicion actual mas los elems que han pasado, entonces tengo que recargar
+                        if((v + p) >= t){
+                            //en corutina IO
+                            lifecycleScope.launch(Dispatchers.IO){
+                                val newItems = JikanAnimeLogic().getAllAnimes()
+                                /*val newItems = MarvelLogic().getMarvelChars(
+                                    name = "spider",
+                                    limit = 20
+                                )*/
+                                //cambio de corutina a Main
+                                withContext(Dispatchers.Main){
+                                    rvAdapter.updateListItems(newItems)
+                                }
+                            }
+                        }
+
+                    }
+                }
+        })
     }
 
     fun sendMarvelItem(item: MarvelChars) {
@@ -71,32 +115,36 @@ class NewFragment : Fragment() {
         startActivity(i)
     }
 
+    fun corrutine(){
+        lifecycleScope.launch(Dispatchers.Main){
+            var name = "Lenin"
+
+            name = withContext(Dispatchers.IO){
+                name = "David"
+                return@withContext name
+            }
+        }
+    }
+
     // Serializacion: pasar de un objeto a un string para poder enviarlo por medio de la web, usa obj JSON
     // Parceables: Mucho mas eficiente que la serializacion pero su implementacion es compleja, pero existen plugins que nos ayudan
-    fun chargeDataRV() {
-
+    fun chargeDataRV(search: String) {
         lifecycleScope.launch(Dispatchers.IO){
-            val rvAdapter = MarvelAdapter(
+            rvAdapter.items = JikanAnimeLogic().getAllAnimes()
                 //ListItems().returnMarvelChars()
-                JikanAnimeLogic().getAllAnimes()
-                //MarvelLogic().getMarvelChars()
-            )
-            //las funciones lambda se llaman con {} y van fuera del parentesis
-            { sendMarvelItem(it) }
+                //JikanAnimeLogic().getAllAnimes()
+                //MarvelLogic().getMarvelChars(name = search, limit = 20)
 
+            //las funciones lambda se llaman con {} y van fuera del parentesis
+            //{ sendMarvelItem(it) }
 
             withContext(Dispatchers.Main){
                 with(binding.rvMarvelChars){
                     this.adapter = rvAdapter
-                    this.layoutManager = LinearLayoutManager(
-                        requireActivity(),
-                        LinearLayoutManager.VERTICAL,
-                        false
-                    )
+                    this.layoutManager = lmanager
                 }
             }
 
         }
-
     }
 }

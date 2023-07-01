@@ -10,10 +10,11 @@ import com.example.dispmoviles.databinding.MarvelCharactersBinding
 import com.google.android.material.snackbar.Snackbar
 import com.squareup.picasso.Picasso
 
-class MarvelAdapter(private val items: List<MarvelChars>,
-                    //Unit es igual al void en java, no devuelve nada
-                    private val fnClick: (MarvelChars) -> Unit):
+class MarvelAdapter( //Unit es igual al void en java, no devuelve nada
+                    private var fnClick: (MarvelChars) -> Unit):
     RecyclerView.Adapter<MarvelAdapter.MarvelViewHolder>() {
+
+    var items: List<MarvelChars> = listOf()
 
     class MarvelViewHolder(view: View): RecyclerView.ViewHolder(view) {
 
@@ -53,4 +54,10 @@ class MarvelAdapter(private val items: List<MarvelChars>,
     }
 
     override fun getItemCount(): Int = items.size
+
+    fun updateListItems(newItems: List<MarvelChars>){
+        //plus agrega a la lista los nuevos elems
+        items = items.plus(newItems)
+        notifyDataSetChanged()
+    }
 }
