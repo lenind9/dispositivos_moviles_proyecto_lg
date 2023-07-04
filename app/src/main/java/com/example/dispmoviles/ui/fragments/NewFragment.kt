@@ -2,12 +2,14 @@ package com.example.dispmoviles.ui.fragments
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Adapter
 import android.widget.ArrayAdapter
 import android.widget.LinearLayout
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -32,6 +34,8 @@ class NewFragment : Fragment() {
     private lateinit var binding: FragmentNewBinding
     private lateinit var lmanager : LinearLayoutManager
     private var rvAdapter : MarvelAdapter = MarvelAdapter { sendMarvelItem(it) }
+
+    private lateinit var marvelCharsItems : MutableList<MarvelChars>
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -106,6 +110,15 @@ class NewFragment : Fragment() {
                     }
                 }
         })
+
+        //se importa el que tiene llaves y dice Editable
+        binding.txtFilter.addTextChangedListener{ filterText ->
+            val newItems = marvelCharsItems.filter {
+                items -> items.name.contains(filterText.toString())
+            }
+
+            rvAdapter.replaceListItems(newItems)
+        }
     }
 
     fun sendMarvelItem(item: MarvelChars) {
@@ -129,11 +142,13 @@ class NewFragment : Fragment() {
     // Serializacion: pasar de un objeto a un string para poder enviarlo por medio de la web, usa obj JSON
     // Parceables: Mucho mas eficiente que la serializacion pero su implementacion es compleja, pero existen plugins que nos ayudan
     fun chargeDataRV(search: String) {
+
         lifecycleScope.launch(Dispatchers.IO){
-            rvAdapter.items = JikanAnimeLogic().getAllAnimes()
-                //ListItems().returnMarvelChars()
-                //JikanAnimeLogic().getAllAnimes()
-                //MarvelLogic().getMarvelChars(name = search, limit = 20)
+            var marvelCharsItems = MarvelLogic().getMarvelChars(name = search, limit = 20)
+            rvAdapter = MarvelAdapter(marvelCharsItems, fnClick = {sendMarvelItem(it)})
+            //rvAdapter.items = JikanAnimeLogic().getAllAnimes()
+            //ListItems().returnMarvelChars()
+            //JikanAnimeLogic().getAllAnimes()
 
             //las funciones lambda se llaman con {} y van fuera del parentesis
             //{ sendMarvelItem(it) }

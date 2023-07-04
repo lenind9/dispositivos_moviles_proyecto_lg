@@ -60,4 +60,10 @@ class MarvelAdapter( //Unit es igual al void en java, no devuelve nada
         items = items.plus(newItems)
         notifyDataSetChanged()
     }
+
+    fun replaceListItems(newItems: List<MarvelChars>){
+        //plus agrega a la lista los nuevos elems
+        this.items = newItems
+        notifyDataSetChanged()
+    }
 }
