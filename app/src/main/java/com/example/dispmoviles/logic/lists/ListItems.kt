@@ -1,7 +1,7 @@
 package com.example.dispmoviles.logic.lists
 
 import com.example.dispmoviles.data.entities.LoginUser
-import com.example.dispmoviles.data.marvel.MarvelChars
+import com.example.dispmoviles.logic.data.MarvelChars
 
 class ListItems {
 

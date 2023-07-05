@@ -2,10 +2,8 @@ package com.example.dispmoviles.ui.activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.example.dispmoviles.R
-import com.example.dispmoviles.data.marvel.MarvelChars
+import com.example.dispmoviles.logic.data.MarvelChars
 import com.example.dispmoviles.databinding.ActivityDetailsMarvelItemBinding
-import com.example.dispmoviles.databinding.MarvelCharactersBinding
 import com.squareup.picasso.Picasso
 
 class DetailsMarvelItem : AppCompatActivity() {

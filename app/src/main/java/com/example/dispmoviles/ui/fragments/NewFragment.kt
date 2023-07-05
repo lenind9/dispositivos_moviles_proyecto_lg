@@ -2,28 +2,22 @@ package com.example.dispmoviles.ui.fragments
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Adapter
 import android.widget.ArrayAdapter
-import android.widget.LinearLayout
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.RecyclerView.LayoutManager
 import com.example.dispmoviles.R
-import com.example.dispmoviles.data.marvel.MarvelChars
+import com.example.dispmoviles.logic.data.MarvelChars
 
 import com.example.dispmoviles.databinding.FragmentNewBinding
 import com.example.dispmoviles.logic.jikanLogic.JikanAnimeLogic
-import com.example.dispmoviles.logic.lists.ListItems
 import com.example.dispmoviles.logic.marvelLogic.MarvelLogic
 import com.example.dispmoviles.ui.activities.DetailsMarvelItem
-import com.example.dispmoviles.ui.activities.MainActivity
 import com.example.dispmoviles.ui.adapters.MarvelAdapter
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -33,9 +27,10 @@ class NewFragment : Fragment() {
 
     private lateinit var binding: FragmentNewBinding
     private lateinit var lmanager : LinearLayoutManager
-    private var rvAdapter : MarvelAdapter = MarvelAdapter { sendMarvelItem(it) }
+    private var rvAdapter : MarvelAdapter =
+        MarvelAdapter { sendMarvelItem(it) }
 
-    private lateinit var marvelCharsItems : MutableList<MarvelChars>
+    private var marvelCharsItems : MutableList<MarvelChars> = mutableListOf<MarvelChars>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -114,9 +109,9 @@ class NewFragment : Fragment() {
         //se importa el que tiene llaves y dice Editable
         binding.txtFilter.addTextChangedListener{ filterText ->
             val newItems = marvelCharsItems.filter {
-                items -> items.name.contains(filterText.toString())
+                items -> items.name.lowercase().contains(
+                filterText.toString().lowercase())
             }
-
             rvAdapter.replaceListItems(newItems)
         }
     }
@@ -128,36 +123,20 @@ class NewFragment : Fragment() {
         startActivity(i)
     }
 
-    fun corrutine(){
-        lifecycleScope.launch(Dispatchers.Main){
-            var name = "Lenin"
-
-            name = withContext(Dispatchers.IO){
-                name = "David"
-                return@withContext name
-            }
-        }
-    }
-
     // Serializacion: pasar de un objeto a un string para poder enviarlo por medio de la web, usa obj JSON
     // Parceables: Mucho mas eficiente que la serializacion pero su implementacion es compleja, pero existen plugins que nos ayudan
     fun chargeDataRV(search: String) {
 
-        lifecycleScope.launch(Dispatchers.IO){
-            var marvelCharsItems = MarvelLogic().getMarvelChars(name = search, limit = 20)
-            rvAdapter = MarvelAdapter(marvelCharsItems, fnClick = {sendMarvelItem(it)})
-            //rvAdapter.items = JikanAnimeLogic().getAllAnimes()
-            //ListItems().returnMarvelChars()
-            //JikanAnimeLogic().getAllAnimes()
+        lifecycleScope.launch(Dispatchers.Main){
+            marvelCharsItems = withContext(Dispatchers.IO) {
+                return@withContext (MarvelLogic().getMarvelChars(
+                    name = search, limit = 20))
+            }
+            rvAdapter.items = marvelCharsItems
 
-            //las funciones lambda se llaman con {} y van fuera del parentesis
-            //{ sendMarvelItem(it) }
-
-            withContext(Dispatchers.Main){
-                with(binding.rvMarvelChars){
-                    this.adapter = rvAdapter
-                    this.layoutManager = lmanager
-                }
+            binding.rvMarvelChars.apply{
+                this.adapter = rvAdapter
+                this.layoutManager = lmanager
             }
 
         }

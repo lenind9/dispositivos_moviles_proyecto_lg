@@ -2,7 +2,7 @@ package com.example.dispmoviles.logic.jikanLogic
 
 import com.example.dispmoviles.data.connections.ApiConnection
 import com.example.dispmoviles.data.endpoints.JikanEndpoint
-import com.example.dispmoviles.data.marvel.MarvelChars
+import com.example.dispmoviles.logic.data.MarvelChars
 
 class JikanAnimeLogic {
 

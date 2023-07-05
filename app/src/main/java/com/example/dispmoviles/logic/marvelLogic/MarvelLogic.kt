@@ -3,7 +3,7 @@ package com.example.dispmoviles.logic.marvelLogic
 import android.util.Log
 import com.example.dispmoviles.data.connections.ApiConnection
 import com.example.dispmoviles.data.endpoints.MarvelEndpoint
-import com.example.dispmoviles.data.marvel.MarvelChars
+import com.example.dispmoviles.logic.data.MarvelChars
 
 class MarvelLogic {
 

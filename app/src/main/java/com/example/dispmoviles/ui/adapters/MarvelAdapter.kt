@@ -5,9 +5,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.dispmoviles.R
-import com.example.dispmoviles.data.marvel.MarvelChars
+import com.example.dispmoviles.logic.data.MarvelChars
 import com.example.dispmoviles.databinding.MarvelCharactersBinding
-import com.google.android.material.snackbar.Snackbar
 import com.squareup.picasso.Picasso
 
 class MarvelAdapter( //Unit es igual al void en java, no devuelve nada
@@ -15,7 +14,6 @@ class MarvelAdapter( //Unit es igual al void en java, no devuelve nada
     RecyclerView.Adapter<MarvelAdapter.MarvelViewHolder>() {
 
     var items: List<MarvelChars> = listOf()
-
     class MarvelViewHolder(view: View): RecyclerView.ViewHolder(view) {
 
         private val binding: MarvelCharactersBinding =

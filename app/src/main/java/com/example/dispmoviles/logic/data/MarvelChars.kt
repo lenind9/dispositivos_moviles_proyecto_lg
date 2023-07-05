@@ -1,4 +1,4 @@
-package com.example.dispmoviles.data.marvel
+package com.example.dispmoviles.logic.data
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
