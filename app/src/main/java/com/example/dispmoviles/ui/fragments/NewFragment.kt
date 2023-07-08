@@ -9,6 +9,7 @@ import android.widget.ArrayAdapter
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.dispmoviles.R
@@ -27,6 +28,7 @@ class NewFragment : Fragment() {
 
     private lateinit var binding: FragmentNewBinding
     private lateinit var lmanager : LinearLayoutManager
+    private lateinit var gManager : GridLayoutManager
     private var rvAdapter : MarvelAdapter =
         MarvelAdapter { sendMarvelItem(it) }
 
@@ -43,7 +45,7 @@ class NewFragment : Fragment() {
             LinearLayoutManager.VERTICAL,
             false
         )
-
+        gManager = GridLayoutManager(requireActivity(), 2)
         return binding.root
     }
 
@@ -90,7 +92,8 @@ class NewFragment : Fragment() {
                         if((v + p) >= t){
                             //en corutina IO
                             lifecycleScope.launch(Dispatchers.IO){
-                                val newItems = JikanAnimeLogic().getAllAnimes()
+                                //val newItems = JikanAnimeLogic().getAllAnimes()
+                                val newItems = MarvelLogic().getAllMarvelChars(0, 99)
                                 /*val newItems = MarvelLogic().getMarvelChars(
                                     name = "spider",
                                     limit = 20
