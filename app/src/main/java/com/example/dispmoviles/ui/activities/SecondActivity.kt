@@ -26,15 +26,13 @@ class SecondActivity : AppCompatActivity() {
     override fun onStart() {
         super.onStart()
 
+        //Cambia el texto del txtView a "Bienvenido"
         var name: String = ""
         binding.txtView.text = "Bienvenido $name"
         Log.d("UCE", "Entrando a Start")
 
-        super.onStart()
         FragmentsManager().replaceFragment(supportFragmentManager,
             binding.frmContainer.id, NewFragment())
-
-
 
         initClass()
     }
@@ -49,9 +47,10 @@ class SecondActivity : AppCompatActivity() {
 
     fun initClass(){
         /*Log.d("uce", "Entrando a start")  debug en la terminal*/
+        //Intent que cambia a la ActivityMain al presionar el button
         binding.btnRetorno.setOnClickListener{
             Log.d("UCE", "Entrando al click de retorno")
-            var intent= Intent(this, ActivityMainBinding::class.java)
+            var intent= Intent(this, MainActivity::class.java)
             startActivity(intent)
 
             /*Snackbar.make(

@@ -5,30 +5,46 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Adapter
 import android.widget.ArrayAdapter
-import android.widget.LinearLayout
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView.LayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.dispmoviles.R
-import com.example.dispmoviles.data.marvel.MarvelChars
+import com.example.dispmoviles.logic.data.MarvelChars
 
 import com.example.dispmoviles.databinding.FragmentNewBinding
-import com.example.dispmoviles.logic.lists.ListItems
+import com.example.dispmoviles.logic.jikanLogic.JikanAnimeLogic
+import com.example.dispmoviles.logic.marvelLogic.MarvelLogic
 import com.example.dispmoviles.ui.activities.DetailsMarvelItem
-import com.example.dispmoviles.ui.activities.MainActivity
 import com.example.dispmoviles.ui.adapters.MarvelAdapter
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class NewFragment : Fragment() {
 
     private lateinit var binding: FragmentNewBinding
+    private lateinit var lmanager : LinearLayoutManager
+    private lateinit var gManager : GridLayoutManager
+    private var rvAdapter : MarvelAdapter = MarvelAdapter { sendMarvelItem(it) }
+
+    private var marvelCharsItems : MutableList<MarvelChars> = mutableListOf<MarvelChars>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
         binding = FragmentNewBinding.inflate(layoutInflater, container, false)
+        lmanager = LinearLayoutManager(
+            requireActivity(),
+            LinearLayoutManager.VERTICAL,
+            false
+        )
+        gManager = GridLayoutManager(requireActivity(), 2)
         return binding.root
     }
 
@@ -50,11 +66,55 @@ class NewFragment : Fragment() {
         )
 
         binding.spinner.adapter = adapter
-        chargeDataRV()
+        chargeDataRV("cap")
 
         binding.rvSwipe.setOnRefreshListener {
-            chargeDataRV()
+            chargeDataRV("cap")
             binding.rvSwipe.isRefreshing = false
+        }
+
+        binding.rvMarvelChars.addOnScrollListener(
+            object: RecyclerView.OnScrollListener(){
+                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                    super.onScrolled(recyclerView, dx, dy)
+                    //dy: posicion vertical
+                    if(dy > 0){
+
+                        //cuantos elems han pasado
+                        val v = lmanager.childCount
+                        //mi posicion actual
+                        val p = lmanager.findFirstVisibleItemPosition()
+                        //cuantos elems tengo en total
+                        val t = lmanager.itemCount
+
+                        //si la posicion actual mas los elems que han pasado, entonces tengo que recargar
+                        if((v + p) >= t){
+                            //en corutina IO
+                            lifecycleScope.launch(Dispatchers.IO){
+                                //val newItems = JikanAnimeLogic().getAllAnimes()
+                                val newItems = MarvelLogic().getAllMarvelChars(0, 99)
+                                /*val newItems = MarvelLogic().getMarvelChars(
+                                    name = "spider",
+                                    limit = 20
+                                )*/
+                                //cambio de corutina a Main
+                                withContext(Dispatchers.Main){
+                                    rvAdapter.updateListItems(newItems)
+                                }
+                            }
+                        }
+
+                    }
+                }
+            })
+
+        //se importa el que tiene llaves y dice Editable
+        binding.txtFilter.addTextChangedListener{ filterText ->
+            val newItems = marvelCharsItems.filter {
+                    items -> items.name.lowercase().contains(
+                filterText.toString().lowercase())
+            }
+            rvAdapter.replaceListItems(newItems)
         }
     }
 
@@ -65,23 +125,21 @@ class NewFragment : Fragment() {
         startActivity(i)
     }
 
-
     // Serializacion: pasar de un objeto a un string para poder enviarlo por medio de la web, usa obj JSON
     // Parceables: Mucho mas eficiente que la serializacion pero su implementacion es compleja, pero existen plugins que nos ayudan
-    fun chargeDataRV() {
-        val rvAdapter = MarvelAdapter(
-            ListItems().returnMarvelChars()
-        )
-        //las funciones lambda se llaman con {} y van fuera del parentesis
-        { sendMarvelItem(it) }
+    fun chargeDataRV(search: String) {
+        lifecycleScope.launch(Dispatchers.Main){
+            marvelCharsItems = withContext(Dispatchers.IO) {
+                return@withContext (MarvelLogic().getMarvelChars(
+                    name = search, limit = 20))
+            }
+            rvAdapter.items = marvelCharsItems
 
-        val rvMarvel = binding.rvMarvelChars
-        rvMarvel.adapter = rvAdapter
-        rvMarvel.layoutManager = LinearLayoutManager(
-            requireActivity(),
-            LinearLayoutManager.VERTICAL,
-            false
-        )
+            binding.rvMarvelChars.apply{
+                this.adapter = rvAdapter
+                this.layoutManager = lmanager
+            }
+
+        }
     }
-
 }
