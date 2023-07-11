@@ -18,6 +18,7 @@ import com.example.dispositivosmoviles.databinding.FragmentFirstBinding
 import com.example.dispositivosmoviles.logic.marvelLogic.MarvelLogic
 import com.example.dispositivosmoviles.ui.activities.DetailsMarvelItem
 import com.example.dispositivosmoviles.ui.adapters.MarvelAdapter
+import com.example.dispositivosmoviles.ui.utilities.DispositivosMoviles
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -71,10 +72,10 @@ class FirstFragment : Fragment() {
         )
 
         binding.spinner.adapter = adapter1
-        chargeDataRV(5)
+        chargeDataRVDB(5)
 
         binding.rvSwipe.setOnRefreshListener {
-            chargeDataRV(5)
+            chargeDataRVDB(5)
             binding.rvSwipe.isRefreshing = false
             lManager.scrollToPositionWithOffset(5, 20)
         }
@@ -138,7 +139,7 @@ class FirstFragment : Fragment() {
         startActivity(i)
     }
 
-    fun chargeDataRV(pos: Int) {
+    fun chargeDataRVAPI(pos: Int) {
         lifecycleScope.launch(Dispatchers.Main) {
             //rvAdapter.items = JikanAnimeLogic().getAllAnimes()
             marvelCharsItems = withContext(Dispatchers.IO) {
@@ -160,4 +161,37 @@ class FirstFragment : Fragment() {
     }
 
 
-}
+
+    fun chargeDataRVDB(pos: Int) {
+        lifecycleScope.launch(Dispatchers.Main) {
+            //rvAdapter.items = JikanAnimeLogic().getAllAnimes()
+            marvelCharsItems = withContext(Dispatchers.IO) {
+                var marvelCharsItems = (MarvelLogic().getAllMarvelCharDB().toMutableList())
+
+
+                if (marvelCharsItems.isEmpty()) {
+                    marvelCharsItems = (MarvelLogic().getAllMarvelChars(
+                        0, page * 3
+                    ))
+                    MarvelLogic().insertMarvelCharstoDB(marvelCharsItems)
+                }
+                return@withContext marvelCharsItems
+            }
+        }
+
+
+
+
+            rvAdapter.items = marvelCharsItems
+
+            binding.rvMarvelChars.apply {
+                this.adapter = rvAdapter;
+                this.layoutManager = gManager;
+
+
+                gManager.scrollToPositionWithOffset(pos, 10)
+            }
+        page++
+        }
+
+    }

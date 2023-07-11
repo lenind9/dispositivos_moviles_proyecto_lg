@@ -76,6 +76,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:imeOptions="actionDone"
+            android:layout_marginBottom="50dp"
             android:maxLines="1"
             android:singleLine="true"
             android:textColor="@color/white"
