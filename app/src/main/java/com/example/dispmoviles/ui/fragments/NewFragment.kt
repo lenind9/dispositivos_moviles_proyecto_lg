@@ -20,11 +20,14 @@ import com.example.dispmoviles.logic.jikanLogic.JikanAnimeLogic
 import com.example.dispmoviles.logic.marvelLogic.MarvelLogic
 import com.example.dispmoviles.ui.activities.DetailsMarvelItem
 import com.example.dispmoviles.ui.adapters.MarvelAdapter
+import com.example.dispmoviles.ui.utilities.DispMoviles
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class NewFragment : Fragment() {
+
+    private var page = 1
 
     private lateinit var binding: FragmentNewBinding
     private lateinit var lmanager : LinearLayoutManager
@@ -67,11 +70,12 @@ class NewFragment : Fragment() {
         )
 
         binding.spinner.adapter = adapter
-        chargeDataRV("cap")
+        chargeDataRVDB(5)
 
         binding.rvSwipe.setOnRefreshListener {
-            chargeDataRV("cap")
+            chargeDataRVDB(5)
             binding.rvSwipe.isRefreshing = false
+            lmanager.scrollToPositionWithOffset(5, 20)
         }
 
         binding.rvMarvelChars.addOnScrollListener(
@@ -128,12 +132,12 @@ class NewFragment : Fragment() {
 
     // Serializacion: pasar de un objeto a un string para poder enviarlo por medio de la web, usa obj JSON
     // Parceables: Mucho mas eficiente que la serializacion pero su implementacion es compleja, pero existen plugins que nos ayudan
-    fun chargeDataRV(search: String) {
+    fun chargeDataRV(pos: Int) {
 
         lifecycleScope.launch(Dispatchers.Main){
             marvelCharsItems = withContext(Dispatchers.IO) {
-                return@withContext (MarvelLogic().getMarvelChars(
-                    name = search, limit = 20))
+                return@withContext (MarvelLogic().getAllMarvelChars(
+                    0, page * 3))
             }
             rvAdapter.items = marvelCharsItems
 
@@ -143,5 +147,35 @@ class NewFragment : Fragment() {
             }
 
         }
+    }
+
+    fun chargeDataRVDB(pos: Int) {
+
+        lifecycleScope.launch(Dispatchers.Main){
+
+            marvelCharsItems = withContext(Dispatchers.IO) {
+
+                var marvelCharsItems = MarvelLogic()
+                    .getAllMarvelCharsDB()
+                    .toMutableList()
+
+            if(marvelCharsItems.isEmpty()) {
+                marvelCharsItems = (MarvelLogic().getAllMarvelChars(
+                        0, page * 3))
+                MarvelLogic().insertMarvelCharsToDB(marvelCharsItems)
+            }
+
+            return@withContext marvelCharsItems
+            }
+        }
+
+        rvAdapter.items = marvelCharsItems
+
+        binding.rvMarvelChars.apply{
+            this.adapter = rvAdapter
+            this.layoutManager = lmanager
+            gManager.scrollToPositionWithOffset(pos, 10)
+        }
+        page++
     }
 }

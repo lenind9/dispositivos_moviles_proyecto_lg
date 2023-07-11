@@ -7,6 +7,7 @@ import android.util.Log
 import com.example.dispmoviles.R
 import com.example.dispmoviles.databinding.ActivityMainBinding
 import com.example.dispmoviles.logic.validator.LoginValidator
+import com.example.dispmoviles.ui.utilities.DispMoviles
 import com.google.android.material.snackbar.Snackbar
 
 class MainActivity : AppCompatActivity() {

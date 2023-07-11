@@ -1,10 +1,13 @@
 package com.example.dispmoviles.logic.marvelLogic
 
-import android.util.Log
 import com.example.dispmoviles.data.connections.ApiConnection
 import com.example.dispmoviles.data.endpoints.MarvelEndpoint
+import com.example.dispmoviles.data.entities.marvel.characters.database.MarvelCharsDB
+import com.example.dispmoviles.data.entities.marvel.characters.database.getMarvelChars
 import com.example.dispmoviles.data.entities.marvel.characters.getMarvelChars
 import com.example.dispmoviles.logic.data.MarvelChars
+import com.example.dispmoviles.logic.data.getMarvelCharsDB
+import com.example.dispmoviles.ui.utilities.DispMoviles
 
 class MarvelLogic {
 
@@ -45,4 +48,26 @@ class MarvelLogic {
         }
         return itemList
     }
+
+    suspend fun getAllMarvelCharsDB(): List<MarvelChars> {
+        var itemList : ArrayList<MarvelChars> = arrayListOf()
+        val items_aux = DispMoviles.getDBInstance().marvelDao().getAllCharacters()
+        items_aux.forEach {
+            itemList.add(it.getMarvelChars())
+        }
+        return itemList
+    }
+
+    suspend fun insertMarvelCharsToDB(items : List<MarvelChars>) {
+        var itemsDB = arrayListOf<MarvelCharsDB>()
+        items.forEach {
+            itemsDB.add(it.getMarvelCharsDB())
+        }
+
+        DispMoviles
+            .getDBInstance()
+            .marvelDao()
+            .insertMarvelChar(itemsDB)
+    }
+
 }
