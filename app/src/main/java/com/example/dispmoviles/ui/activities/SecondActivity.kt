@@ -31,31 +31,8 @@ class SecondActivity : AppCompatActivity() {
         binding.txtView.text = "Bienvenido $name"
         Log.d("UCE", "Entrando a Start")
 
-        FragmentsManager().replaceFragment(supportFragmentManager,
-            binding.frmContainer.id, NewFragment())
-
-        initClass()
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-    }
-
-    override fun onBackPressed() {
-        super.onBackPressed()
-    }
-
-    fun initClass(){
-        /*Log.d("uce", "Entrando a start")  debug en la terminal*/
-        //Intent que cambia a la ActivityMain al presionar el button
-        binding.btnRetorno.setOnClickListener{
-            Log.d("UCE", "Entrando al click de retorno")
-            var intent= Intent(this, MainActivity::class.java)
-            startActivity(intent)
-
-            /*Snackbar.make(
-                binding.loginSegundo,"regresando",
-                Snackbar.LENGTH_LONG).show()*/
+        binding.btnRetorno.setOnClickListener {
+            startActivity(Intent(this, MainActivity::class.java))
         }
 
         binding.bottomNavigation.setOnItemSelectedListener { item ->
@@ -78,5 +55,11 @@ class SecondActivity : AppCompatActivity() {
                 else -> false
             }
         }
+
     }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+    }
+
 }

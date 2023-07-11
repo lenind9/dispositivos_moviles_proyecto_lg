@@ -26,10 +26,13 @@ import kotlinx.coroutines.withContext
 
 class NewFragment : Fragment() {
 
+    private var page = 1
+
     private lateinit var binding: FragmentNewBinding
     private lateinit var lmanager : LinearLayoutManager
     private lateinit var gManager : GridLayoutManager
-    private var rvAdapter : MarvelAdapter = MarvelAdapter { sendMarvelItem(it) }
+    private var rvAdapter : MarvelAdapter =
+        MarvelAdapter { sendMarvelItem(it) }
 
     private var marvelCharsItems : MutableList<MarvelChars> = mutableListOf<MarvelChars>()
 
@@ -51,13 +54,7 @@ class NewFragment : Fragment() {
     override fun onStart(){
         super.onStart()
 
-        val names = arrayListOf<String>(
-            "Carlos",
-            "Xavier",
-            "Andrés",
-            "Pepe",
-            "Mariano",
-            "Rosa")
+        val names = arrayListOf<String>("Carlos", "Xavier", "Andrés", "Pepe", "Mariano", "Rosa")
 
         val adapter = ArrayAdapter<String>(
             requireActivity(),
@@ -66,41 +63,33 @@ class NewFragment : Fragment() {
         )
 
         binding.spinner.adapter = adapter
-        chargeDataRV("cap")
+        chargeDataRVDB(5)
 
         binding.rvSwipe.setOnRefreshListener {
-            chargeDataRV("cap")
+            chargeDataRVDB(5)
             binding.rvSwipe.isRefreshing = false
+            lmanager.scrollToPositionWithOffset(5, 20)
         }
 
         binding.rvMarvelChars.addOnScrollListener(
             object: RecyclerView.OnScrollListener(){
                 override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                     super.onScrolled(recyclerView, dx, dy)
-                    //dy: posicion vertical
                     if(dy > 0){
-
-                        //cuantos elems han pasado
-                        val v = lmanager.childCount
-                        //mi posicion actual
-                        val p = lmanager.findFirstVisibleItemPosition()
-                        //cuantos elems tengo en total
-                        val t = lmanager.itemCount
+                        val v = lmanager.childCount //cuantos elems han pasado
+                        val p = lmanager.findFirstVisibleItemPosition() //mi posicion actual
+                        val t = lmanager.itemCount //cuantos elems tengo en total
 
                         //si la posicion actual mas los elems que han pasado, entonces tengo que recargar
                         if((v + p) >= t){
                             //en corutina IO
                             lifecycleScope.launch(Dispatchers.IO){
                                 //val newItems = JikanAnimeLogic().getAllAnimes()
-                                val newItems = MarvelLogic().getAllMarvelChars(0, 99)
-                                /*val newItems = MarvelLogic().getMarvelChars(
-                                    name = "spider",
-                                    limit = 20
-                                )*/
-                                //cambio de corutina a Main
-                                withContext(Dispatchers.Main){
-                                    rvAdapter.updateListItems(newItems)
+                                val newItems = with(Dispatchers.IO) {
+                                    MarvelLogic().getAllMarvelChars(0, page * 3)
+                                    //JikanAnimeLogic().getAllAnimes()
                                 }
+                                    rvAdapter.updateListItems(newItems)
                             }
                         }
 
@@ -127,11 +116,11 @@ class NewFragment : Fragment() {
 
     // Serializacion: pasar de un objeto a un string para poder enviarlo por medio de la web, usa obj JSON
     // Parceables: Mucho mas eficiente que la serializacion pero su implementacion es compleja, pero existen plugins que nos ayudan
-    fun chargeDataRV(search: String) {
+    fun chargeDataRV(pos: Int) {
         lifecycleScope.launch(Dispatchers.Main){
             marvelCharsItems = withContext(Dispatchers.IO) {
-                return@withContext (MarvelLogic().getMarvelChars(
-                    name = search, limit = 20))
+                return@withContext (MarvelLogic().getAllMarvelChars(
+                    0, page * 3))
             }
             rvAdapter.items = marvelCharsItems
 
@@ -141,5 +130,33 @@ class NewFragment : Fragment() {
             }
 
         }
+    }
+
+    fun chargeDataRVDB(pos: Int) {
+        lifecycleScope.launch(Dispatchers.Main){
+
+            marvelCharsItems = withContext(Dispatchers.IO) {
+                var marvelCharsItems = MarvelLogic()
+                    .getAllMarvelCharsDB()
+                    .toMutableList()
+
+                if(marvelCharsItems.isEmpty()) {
+                    marvelCharsItems = (MarvelLogic().getAllMarvelChars(
+                        0, page * 3))
+                    MarvelLogic().insertMarvelCharsToDB(marvelCharsItems)
+                }
+
+                return@withContext marvelCharsItems
+            }
+        }
+
+        rvAdapter.items = marvelCharsItems
+
+        binding.rvMarvelChars.apply{
+            this.adapter = rvAdapter
+            this.layoutManager = lmanager
+            gManager.scrollToPositionWithOffset(pos, 10)
+        }
+        page++
     }
 }
