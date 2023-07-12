@@ -154,28 +154,17 @@ class NewFragment : Fragment() {
         lifecycleScope.launch(Dispatchers.Main){
 
             marvelCharsItems = withContext(Dispatchers.IO) {
-
-                var marvelCharsItems = MarvelLogic()
-                    .getAllMarvelCharsDB()
-                    .toMutableList()
-
-            if(marvelCharsItems.isEmpty()) {
-                marvelCharsItems = (MarvelLogic().getAllMarvelChars(
-                        0, page * 3))
-                MarvelLogic().insertMarvelCharsToDB(marvelCharsItems)
+                return@withContext MarvelLogic().getInitChars
             }
 
-            return@withContext marvelCharsItems
+            rvAdapter.items = marvelCharsItems
+
+            binding.rvMarvelChars.apply{
+                this.adapter = rvAdapter
+                this.layoutManager = gManager
+                gManager.scrollToPositionWithOffset(pos, 10)
             }
+            page++
         }
-
-        rvAdapter.items = marvelCharsItems
-
-        binding.rvMarvelChars.apply{
-            this.adapter = rvAdapter
-            this.layoutManager = lmanager
-            gManager.scrollToPositionWithOffset(pos, 10)
-        }
-        page++
     }
 }

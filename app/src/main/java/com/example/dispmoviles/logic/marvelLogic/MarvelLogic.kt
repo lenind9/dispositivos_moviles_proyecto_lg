@@ -58,6 +58,21 @@ class MarvelLogic {
         return itemList
     }
 
+    suspend fun getInitChars(page : Int){
+        marvelCharsItems = withContext(Dispatchers.IO) {
+            var marvelCharsItems = MarvelLogic()
+                .getAllMarvelCharsDB()
+                .toMutableList()
+
+            if(marvelCharsItems.isEmpty()) {
+                marvelCharsItems = (MarvelLogic().getAllMarvelChars(
+                    0, page * 3))
+                MarvelLogic().insertMarvelCharsToDB(marvelCharsItems)
+            }
+            return@withContext marvelCharsItems
+        }
+    }
+
     suspend fun insertMarvelCharsToDB(items : List<MarvelChars>) {
         var itemsDB = arrayListOf<MarvelCharsDB>()
         items.forEach {
