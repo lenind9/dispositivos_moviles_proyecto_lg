@@ -4,12 +4,12 @@
         android:id="@+id/menu_item_wifi"
         android:enabled="true"
         android:icon="@drawable/baseline_api_24"
-        android:title="@string/menu_name_wifi"/>
+        android:title="@string/menu_name_API"/>
     <item
         android:id="@+id/menu_item_bluetooth"
         android:enabled="true"
         android:icon="@drawable/baseline_folder_24"
-        android:title="@string/menu_name_bluetooth"/>
+        android:title="@string/menu_name_Files"/>
     <item
         android:id="@+id/menu_item_settings"
         android:enabled="true"

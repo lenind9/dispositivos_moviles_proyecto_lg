@@ -87,16 +87,17 @@
             android:id="@+id/txtFilter"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:backgroundTint="@color/white"
             android:imeOptions="actionDone"
+
             android:maxLines="1"
             android:singleLine="true"
             android:textColor="@color/white"
-            android:textSize="14sp"
+            android:textColorHint="#FFFFFF"
 
-            >
+            android:textSize="14sp">
 
         </EditText>
-
 
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
             android:id="@+id/rvSwipe"
