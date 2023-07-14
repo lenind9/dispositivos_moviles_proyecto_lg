@@ -1,20 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item
-        android:id="@+id/menu_item_wifi"
-        android:enabled="true"
-        android:icon="@drawable/baseline_api_24"
-        android:title="@string/menu_name_API"/>
-    <item
-        android:id="@+id/menu_item_bluetooth"
-        android:enabled="true"
-        android:icon="@drawable/baseline_folder_24"
-        android:title="@string/menu_name_Files"/>
-    <item
-        android:id="@+id/menu_item_settings"
-        android:enabled="true"
-        android:icon="@drawable/baseline_tune_24"
-        android:title="@string/menu_name_settings"/>
 
-
+    <item
+        android:id="@+id/inicio"
+        android:enabled="true"
+        android:icon="@drawable/home_24"
+        android:title="@string/menu_inicio"
+        />
+    <item
+        android:id="@+id/favoritos"
+        android:enabled="true"
+        android:icon="@drawable/baseline_favorite_24"
+        android:title="@string/menu_favoritos"
+        />
+    <item
+        android:id="@+id/ajustes"
+        android:enabled="true"
+        android:icon="@drawable/baseline_settings_24"
+        android:title="@string/menu_ajustes"
+        />
 </menu>

@@ -31,7 +31,7 @@ import kotlin.collections.mutableListOf
 class FirstFragment : Fragment() {
 
     private lateinit var binding: FragmentFirstBinding;
-    private var rvAdapter: MarvelAdapter = MarvelAdapter { sendMarvelItem(it)  }
+    private var rvAdapter: MarvelAdapter = MarvelAdapter { sendMarvelItem(it) }
     private lateinit var lManager: LinearLayoutManager
     private lateinit var gManager: GridLayoutManager
     private val limit = 99
@@ -149,7 +149,7 @@ class FirstFragment : Fragment() {
         lifecycleScope.launch(Dispatchers.Main){
             DispositivosMoviles.getDbInstance().marvelDao().insertMarvelCharacter(
                 listOf(item.getMarvelCharsDB())
-                    )
+            )
         }
         return true
     }
@@ -198,13 +198,13 @@ class FirstFragment : Fragment() {
         }else{
             Snackbar.make(binding.cardView, "no hay conexion",
                 Snackbar.LENGTH_LONG
-                ).show()
-        }
-
-
-
+            ).show()
         }
 
 
 
     }
+
+
+
+}

@@ -11,30 +11,26 @@ import com.squareup.picasso.Picasso
 
 class MarvelAdapter(
     //private var items: List<MarvelChars>,
-    private var fnClick: (MarvelChars) -> Unit,
-    private var fnSave : (MarvelChars) -> Boolean  //deveulte tru/false si se pasó o no
-) :
+    /*private var fnClick: (MarvelChars) -> Unit,
+    private var fnSave : (MarvelChars) -> Boolean  //deveulte tru/false si se pasó o no*/
+    private var fnClick: (MarvelChars) -> Unit):
+
     RecyclerView.Adapter<MarvelAdapter.MarvelViewHolder>() {
     var items: List<MarvelChars> = listOf()
     class MarvelViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
         private val binding: MarvelCharactersBinding = MarvelCharactersBinding.bind(view)
 
-        fun render(
-            item: MarvelChars,
-            fnClick: (MarvelChars) -> Unit,
-            fnSave: (MarvelChars) -> Boolean
-        ) {
-            binding.txtName.text = item.name;
-            binding.txtComic.text = item.comic;
+        fun render(item: MarvelChars,
+                   fnClick: (MarvelChars) -> Unit){
+            binding.imgImage.bringToFront()
+            binding.txtName.text = item.name
+            binding.txtComic.text = item.comic
             Picasso.get().load(item.image).into(binding.imgImage)
 
             itemView.setOnClickListener{
-                //Snackbar.make(binding.imgMarvel, item.name, Snackbar.LENGTH_SHORT).show()
                 fnClick(item)
-            }
-            binding.btnSave.setOnClickListener{
-                fnSave(item)
+                //Snackbar.make(binding.imgMarvel, item.name, Snackbar.LENGTH_SHORT).show()
             }
         }
 
@@ -57,7 +53,7 @@ class MarvelAdapter(
     }
 
     override fun onBindViewHolder(holder: MarvelAdapter.MarvelViewHolder, position: Int) {
-        holder.render(items[position], fnClick,fnSave)
+        holder.render(items[position], fnClick)
     }
 
     override fun getItemCount(): Int = items.size

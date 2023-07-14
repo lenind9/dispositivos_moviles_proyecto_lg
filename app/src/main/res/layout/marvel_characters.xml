@@ -8,10 +8,9 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="25dp"
-        app:cardCornerRadius="12dp"
+        android:layout_marginBottom="30dp"
+        app:cardCornerRadius="5dp"
         app:cardElevation="10dp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -19,9 +18,9 @@
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="348px"
+            android:layout_height="350px"
             android:weightSum="2"
-            android:background="@color/twitter_color_dm">
+            android:background="@color/blue">
 
             <ImageView
                 android:id="@+id/imgImage"
@@ -29,7 +28,6 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_marginStart="20dp"
-
                 android:layout_marginTop="16dp"
                 android:layout_marginBottom="16dp"/>
 
@@ -49,7 +47,6 @@
                     android:text="Titulo"
                     android:textColor="@color/white"
                     android:textAlignment="viewStart">
-
                 </TextView>
 
                 <TextView
@@ -60,22 +57,16 @@
                     android:text="Rating"
                     android:textColor="@color/white"
                     android:textAlignment="viewStart">
-
                 </TextView>
 
                 <Button
                     android:id="@+id/btnSave"
                     android:layout_width="100dp"
                     android:layout_height="48dp"
-                    android:drawableLeft="@drawable/baseline_favorite_24"
-
-                    />
+                    android:drawableLeft="@drawable/baseline_favorite_24" />
 
             </LinearLayout>
-
         </LinearLayout>
 
     </androidx.cardview.widget.CardView>
-
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

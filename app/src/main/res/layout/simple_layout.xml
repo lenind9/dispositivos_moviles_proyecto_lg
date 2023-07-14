@@ -3,8 +3,8 @@
 
     android:id="@+id/simple_layout"
     style="?android:attr/spinnerItemStyle"
-    android:background="@color/blue"
-    android:textColor="@color/button_color_dm"
+    android:background="@color/light_grey"
+    android:textColor="@color/blue"
     android:singleLine="true"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"

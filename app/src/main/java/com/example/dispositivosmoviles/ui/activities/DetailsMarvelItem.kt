@@ -34,8 +34,8 @@ class DetailsMarvelItem : AppCompatActivity() {
 
         if (item !== null){
             binding.txtName.text = item.name
-            binding.marveltitle.text = item.comic
-            Picasso.get().load(item.image).into(binding.imgImage)
+            binding.txtComic.text = item.comic
+            Picasso.get().load(item.image).into(binding.imgMarvel)
             binding.txtDescription.text = item.synopsis
 
         }

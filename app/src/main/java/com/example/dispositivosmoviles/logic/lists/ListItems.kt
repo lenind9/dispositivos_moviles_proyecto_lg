@@ -4,47 +4,44 @@ import com.example.dispositivosmoviles.logic.data.MarvelChars
 
 class ListItems {
 
-
     fun returnMarvelChars(): List<MarvelChars> {
         val items = listOf(
             MarvelChars(
                 1,
-                "Spider-Man",
-                "The Amazing Spider-Man Vol.7 (2014)",
+                "Daredevil",
+                "Daredevil Issue #512 (1998)",
                 "",
-                "https://comicvine.gamespot.com/a/uploads/scale_small/6/67663/3493707-700.3a.jpg"
+                "https://comicvine.gamespot.com/a/uploads/original/11174/111743204/8923730-vincenzoriccardi.jpg"
             ),
             MarvelChars(
                 2,
-                "Black Panther",
-                "Black Panther (2003)",
+                "Punisher",
+                "The Punisher Issue #104 (1995)",
                 "",
-                "https://comicvine.gamespot.com/a/uploads/scale_small/2/26954/659356-5395_20060926192902_large.jpg"
+                "https://comicvine.gamespot.com/a/uploads/original/11/115213/8075122-punisher-marvel-comics.jpg"
             ),
             MarvelChars(
                 3,
                 "Black Cat",
-                "The Amazing Spider-Man Vol.5 (2012)",
+                "The Astonishing Spider-Man Issue #62 (2009)",
                 "",
-                "https://comicvine.gamespot.com/a/uploads/scale_small/11144/111442876/8759849-grr.jpg"
+                "https://comicvine.gamespot.com/a/uploads/original/12/124259/8106984-black_cat_vol_2_9_sway_variant_textless.jpg"
             ),
             MarvelChars(
                 4,
-                "Spider-Woman",
-                "The Amazing Spider-Man Vol.3 (2005)",
+                "Spider-Man",
+                "The Amazing Spider-Man Issue #700 (2013)",
                 "",
-                "https://comicvine.gamespot.com/a/uploads/scale_small/11116/111167641/7822219-spiderwoman_issue11-art.jpg"
+                "https://comicvine.gamespot.com/a/uploads/original/13/132327/6605716-spider_man_ps4_by_patrickbrown-dcm8o9q.jpg"
             ),
             MarvelChars(
                 5,
-                "Blade",
-                "Blade (2007)",
+                "Scarlet Witch",
+                "House of M Issue #4 (2006)",
                 "",
-                "https://comicvine.gamespot.com/a/uploads/scale_small/12/124259/7949396-heroes_reborn_vol_2_1_devil_dog_comics_exclusive_virgin_variant.jpg"
-            ),
-
+                "https://comicvine.gamespot.com/a/uploads/original/12/124259/7930568-women_of_marvel_vol_2_1_lee_exclusive_virgin_variant.jpg"
             )
-
+        )
         return items
     }
 }

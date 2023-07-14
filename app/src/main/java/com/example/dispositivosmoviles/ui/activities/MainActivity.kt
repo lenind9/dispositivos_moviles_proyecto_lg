@@ -24,9 +24,14 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        //Los botones con binding
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+    }
+
+    override fun onStart() {
+        super.onStart()
+        initClass()
+        llamar()
     }
 
     override fun onDestroy() {
@@ -46,7 +51,7 @@ class MainActivity : AppCompatActivity() {
                 intent.putExtra("var2", 2)
                 startActivity(intent)
             }else{
-                var snackbar = Snackbar.make(binding.txtTitle,
+                var snackbar = Snackbar.make(binding.btnSignup,
                     "Usuario o contraseña inválidos",
                     Snackbar.LENGTH_LONG)
                 //snackbar.setBackgroundTint(ContextCompat.getColor(binding.root.context, R.color.principal_color_dm))
@@ -57,19 +62,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun llamar(){
-
         binding.btnFacebook.setOnClickListener(){
             var uri = Uri.parse("tel:0963269273");
             var intent = Intent(Intent.ACTION_DIAL, uri);
             startActivity(intent)
         }
-
-    }
-
-    override fun onStart() {
-        super.onStart()
-        initClass()
-        llamar()
 
     }
 }

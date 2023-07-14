@@ -25,16 +25,11 @@ class PrincipalActivity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
-        var name: String = " "
 
-        /*
-        intent.extras.let {
-            name= it?.getString("var1")!!}
-
-         */
-
-        Log.d("UCE", "Hola ${name}")
-        binding.txtTitle.text = "Bienvenido " + name.toString()
+        //Cambia el texto del txtView a "Bienvenido"
+        var name: String = ""
+        binding.txtView.text = "Bienvenido $name"
+        Log.d("UCE", "Entrando a Start")
 
         binding.btnRetorno.setOnClickListener {
             startActivity(
@@ -43,30 +38,16 @@ class PrincipalActivity : AppCompatActivity() {
 
         binding.bottomNavigation.setOnItemSelectedListener { item ->
             when (item.itemId) {
-                R.id.menu_item_wifi -> {
-                    FragmentsManager().replaceFragment(supportFragmentManager, binding.frmContainter.id, FirstFragment())
+                R.id.inicio -> {
+                    FragmentsManager().replaceFragment(supportFragmentManager, binding.frmContainer1.id, FirstFragment())
                     true
                 }
 
-/*                R.id.menu_item_bluetooth -> {
-                    // Respond to navigation item 2 click
-                    var suma : Int = 0;
-                    for (i in listOf(8,12,13)){
-                        suma = suma + i;
-                    }
-                    var s = Snackbar.make(binding.txtTitle,
-                        "La suma es ${suma}",
-                        Snackbar.LENGTH_LONG)
-
-                    s.setBackgroundTint(ContextCompat.getColor(binding.root.context, R.color.principal_color_dm))
-                    s.show()
-                    true
-                }*/
-                R.id.menu_item_bluetooth -> {
-                    FragmentsManager().replaceFragment(supportFragmentManager, binding.frmContainter.id, SecondFragment())
+                R.id.favoritos -> {
+                    FragmentsManager().replaceFragment(supportFragmentManager, binding.frmContainer1.id, SecondFragment())
                     true
                 }
-                R.id.menu_item_settings -> { FragmentsManager().replaceFragment(supportFragmentManager, binding.frmContainter.id, ThirdFragment())
+                R.id.ajustes -> { FragmentsManager().replaceFragment(supportFragmentManager, binding.frmContainer1.id, ThirdFragment())
                     true
                 }
 

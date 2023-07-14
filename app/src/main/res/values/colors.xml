@@ -12,9 +12,14 @@
     <color name="twitter_color_dm">#01a2f4</color>
     <color name="facebook_color_dm">#22599a</color>
 
-    <color name="blue">#3f51b5</color>
-    <color name="red">#C53939</color>
     <color name="orange">#E47926</color>
     <color name="azulmarvel">#0535AF</color>
-    <color name="redmarvel">#C60404</color>
+
+    <color name="red">#FF5F6B</color>
+    <color name="light_red">#FF0000</color>
+    <color name="dark_red">#960000</color>
+    <color name="light_grey">#979FC5</color>
+    <color name="light_blue">#00A2F5</color>
+    <color name="blue">#23599B</color>
+    <color name="red_marvel">#B70A0B</color>
 </resources>
