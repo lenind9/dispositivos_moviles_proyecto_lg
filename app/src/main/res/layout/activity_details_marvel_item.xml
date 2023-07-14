@@ -1,37 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".ui.activities.DetailsMarvelItem">
+    android:layout_height="wrap_content">
 
-    <ImageView
-        android:id="@+id/imgMarvel"
-        android:layout_width="300dp"
-        android:layout_height="300dp"
-        android:layout_gravity="center"
-        />
 
-    <TextView
-        android:id="@+id/txtName"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:background="@color/red_marvel"
-        android:textColor="@color/white"
-        android:gravity="center"
-        android:textSize="30sp"
-        android:textStyle="bold"
-        />
+        android:layout_height="match_parent"
+        android:background="@drawable/background_marvel"
+        android:orientation="vertical"
+        tools:context=".ui.activities.DetailsMarvelItem">
 
-    <TextView
-        android:id="@+id/txtComic"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/light_grey"
-        android:gravity="center"
-        android:textSize="25sp" />
 
-</LinearLayout>
+        <ImageView
+            android:id="@+id/imgMarvel"
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            android:layout_gravity="center"
+            />
+
+        <TextView
+            android:id="@+id/txtName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textColor="@color/white"
+            android:gravity="center"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            />
+
+        <TextView
+            android:id="@+id/txtComic"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/light_grey"
+            android:gravity="center"
+            android:textSize="25sp" />
+
+        <TextView
+            android:id="@+id/txtDescription"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="50dp"
+            android:layout_marginEnd="50dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="15dp"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:textStyle="italic" />
+
+    </LinearLayout>
+
+</ScrollView>

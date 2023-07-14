@@ -1,42 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_margin="15dp"
+    android:background="@color/light_grey"
     android:orientation="vertical"
+    android:windowSoftInputMode="adjustResize"
     tools:context=".ui.fragments.NewFragment">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView"
-        android:layout_width="330dp"
-        android:layout_height="95dp"
+        android:layout_width="300dp"
+        android:layout_height="150dp"
         android:layout_marginTop="40dp"
-        android:layout_marginLeft="35dp"
-        android:backgroundTint="@color/black"
+        android:backgroundTint="@color/red_marvel"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <ImageView
-            android:id="@+id/imageMiles"
-            android:layout_width="87dp"
+        <LinearLayout
+            android:id="@+id/ctnCardView"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:src="@drawable/miles"
-            tools:layout_editor_absoluteX="115dp"
-            tools:layout_editor_absoluteY="166dp" />
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/textViewFrag"
-            android:layout_width="240dp"
-            android:layout_height="match_parent"
-            android:layout_gravity="right"
-            android:background="@color/dark_red"
-            android:gravity="center"
-            android:text="Mi primer fragment"
-            android:textColor="@color/black"
-            android:textSize="25sp" />
+            <pl.droidsonroids.gif.GifImageView
+                android:layout_width="200dp"
+                android:layout_height="150dp"
+                android:layout_gravity="center_horizontal"
+                android:src="@drawable/dancing_spiderman" />
+
+        </LinearLayout>
 
     </androidx.cardview.widget.CardView>
 
@@ -50,11 +47,14 @@
         app:layout_constraintTop_toBottomOf="@+id/cardView" />
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="horizontal"
-        tools:layout_editor_absoluteX="68dp"
-        tools:layout_editor_absoluteY="126dp">
+        android:id="@+id/ctnMarvelChars"
+        android:layout_width="320dp"
+        android:layout_height="400dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/spinner">
 
         <EditText
             android:id="@+id/txtFilter"
@@ -81,4 +81,4 @@
 
     </LinearLayout>
 
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

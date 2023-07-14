@@ -43,6 +43,8 @@ class MainActivity : AppCompatActivity() {
             if(check) {
                 var intent = Intent(this, SecondActivity::class.java)
                 //intent.putExtra("var1", binding.editTextTextEmailAddress.toString())
+                intent.putExtra("var1", binding.editTextTextEmailAddress.text.toString())
+                intent.putExtra("var2", 2)
                 startActivity(intent)
                 Snackbar.make(binding.textRegistrese ,"Correcto",
                     Snackbar.LENGTH_LONG).show()

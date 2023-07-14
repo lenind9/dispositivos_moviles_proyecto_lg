@@ -4,56 +4,80 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_margin="15dp"
+    android:background="@color/light_grey"
+    android:windowSoftInputMode="adjustResize"
     tools:context=".ui.fragments.SecondFragment">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView2"
-        android:layout_width="330dp"
-        android:layout_height="95dp"
+        android:layout_width="300dp"
+        android:layout_height="115dp"
         android:layout_marginTop="40dp"
         android:backgroundTint="@color/black"
+        app:cardCornerRadius="15dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <ImageView
-            android:id="@+id/imageMiles2"
-            android:layout_width="87dp"
+        <LinearLayout
+            android:id="@+id/ctnCardView"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:src="@drawable/miles"
-            tools:layout_editor_absoluteX="115dp"
-            tools:layout_editor_absoluteY="166dp" />
-
-        <TextView
-            android:id="@+id/textViewFrag2"
-            android:layout_width="240dp"
-            android:layout_height="match_parent"
-            android:layout_gravity="right"
-            android:background="@color/dark_red"
             android:gravity="center"
-            android:text="Mi segundo fragment"
-            android:textColor="@color/black"
-            android:textSize="25sp" />
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginHorizontal="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_weight="1"
+                android:autoSizeTextType="uniform"
+                android:fontFamily="@font/marvel2"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textAllCaps="true"
+                android:text="Personajes de Marvel"/>
+
+        </LinearLayout>
 
     </androidx.cardview.widget.CardView>
 
-    <Spinner
-        android:id="@+id/spinner2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="25dp"
+    <LinearLayout
+        android:id="@+id/ctnMarvelChars"
+        android:layout_width="320dp"
+        android:layout_height="425dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cardView2" />
+        app:layout_constraintTop_toBottomOf="@+id/cardView2">
 
-    <ListView
-        android:id="@+id/listView2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="25dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spinner2" />
+        <EditText
+            android:id="@+id/txtFilter"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:imeOptions="actionDone"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:textColor="@color/white"
+            android:textSize="14sp"
+            />
+
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/rvSwipe"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvMarvelChars"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

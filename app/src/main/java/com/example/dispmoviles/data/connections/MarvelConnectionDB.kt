@@ -1,6 +1,5 @@
 package com.example.dispmoviles.data.connections
 
-
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import com.example.dispmoviles.data.dao.marvel.MarvelCharsDAO

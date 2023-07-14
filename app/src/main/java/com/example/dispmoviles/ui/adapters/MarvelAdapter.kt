@@ -38,7 +38,7 @@ class MarvelAdapter( //Unit es igual al void en java, no devuelve nada
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): MarvelAdapter.MarvelViewHolder {
+    ): MarvelViewHolder {
         val inflater = LayoutInflater.from(parent.context)
 
         return MarvelViewHolder(
@@ -48,7 +48,7 @@ class MarvelAdapter( //Unit es igual al void en java, no devuelve nada
         )
     }
 
-    override fun onBindViewHolder(holder: MarvelAdapter.MarvelViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: MarvelViewHolder, position: Int) {
         holder.render(items[position], fnClick)
     }
 

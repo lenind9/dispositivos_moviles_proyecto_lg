@@ -12,11 +12,9 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.dispmoviles.R
 import com.example.dispmoviles.logic.data.MarvelChars
 
 import com.example.dispmoviles.databinding.FragmentNewBinding
-import com.example.dispmoviles.logic.jikanLogic.JikanAnimeLogic
 import com.example.dispmoviles.logic.marvelLogic.MarvelLogic
 import com.example.dispmoviles.ui.activities.DetailsMarvelItem
 import com.example.dispmoviles.ui.adapters.MarvelAdapter
@@ -26,13 +24,11 @@ import kotlinx.coroutines.withContext
 
 class NewFragment : Fragment() {
 
-    private var page = 1
-
     private lateinit var binding: FragmentNewBinding
-    private lateinit var lmanager : LinearLayoutManager
+    private var rvAdapter : MarvelAdapter = MarvelAdapter { sendMarvelItem(it) }
+    private lateinit var lManager : LinearLayoutManager
     private lateinit var gManager : GridLayoutManager
-    private var rvAdapter : MarvelAdapter =
-        MarvelAdapter { sendMarvelItem(it) }
+    private var page = 1
 
     private var marvelCharsItems : MutableList<MarvelChars> = mutableListOf<MarvelChars>()
 
@@ -42,7 +38,7 @@ class NewFragment : Fragment() {
     ): View? {
 
         binding = FragmentNewBinding.inflate(layoutInflater, container, false)
-        lmanager = LinearLayoutManager(
+        lManager = LinearLayoutManager(
             requireActivity(),
             LinearLayoutManager.VERTICAL,
             false
@@ -58,7 +54,7 @@ class NewFragment : Fragment() {
 
         val adapter = ArrayAdapter<String>(
             requireActivity(),
-            R.layout.simple_layout,
+            android.R.layout.simple_spinner_item,
             names
         )
 
@@ -68,7 +64,7 @@ class NewFragment : Fragment() {
         binding.rvSwipe.setOnRefreshListener {
             chargeDataRVDB(5)
             binding.rvSwipe.isRefreshing = false
-            lmanager.scrollToPositionWithOffset(5, 20)
+            lManager.scrollToPositionWithOffset(5, 20)
         }
 
         binding.rvMarvelChars.addOnScrollListener(
@@ -76,20 +72,20 @@ class NewFragment : Fragment() {
                 override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                     super.onScrolled(recyclerView, dx, dy)
                     if(dy > 0){
-                        val v = lmanager.childCount //cuantos elems han pasado
-                        val p = lmanager.findFirstVisibleItemPosition() //mi posicion actual
-                        val t = lmanager.itemCount //cuantos elems tengo en total
+                        val v = lManager.childCount //cuantos elems han pasado
+                        val p = lManager.findFirstVisibleItemPosition() //mi posicion actual
+                        val t = lManager.itemCount //cuantos elems tengo en total
 
                         //si la posicion actual mas los elems que han pasado, entonces tengo que recargar
                         if((v + p) >= t){
                             //en corutina IO
                             lifecycleScope.launch(Dispatchers.IO){
-                                //val newItems = JikanAnimeLogic().getAllAnimes()
                                 val newItems = with(Dispatchers.IO) {
+
                                     MarvelLogic().getAllMarvelChars(0, page * 3)
                                     //JikanAnimeLogic().getAllAnimes()
                                 }
-                                    rvAdapter.updateListItems(newItems)
+                                rvAdapter.updateListItems(newItems)
                             }
                         }
 
@@ -110,43 +106,45 @@ class NewFragment : Fragment() {
     fun sendMarvelItem(item: MarvelChars) {
         //Intents solo estan en fragments y activities
         val i = Intent(requireActivity(), DetailsMarvelItem::class.java)
-        i.putExtra("name", item)
+        i.putExtra("item", item)
         startActivity(i)
     }
 
     // Serializacion: pasar de un objeto a un string para poder enviarlo por medio de la web, usa obj JSON
     // Parceables: Mucho mas eficiente que la serializacion pero su implementacion es compleja, pero existen plugins que nos ayudan
-    fun chargeDataRV(pos: Int) {
+    fun chargeDataRVAPI(pos: Int) {
         lifecycleScope.launch(Dispatchers.Main){
             marvelCharsItems = withContext(Dispatchers.IO) {
-                return@withContext (MarvelLogic().getAllMarvelChars(
-                    0, page * 3))
+                return@withContext (MarvelLogic().getAllMarvelCharsDB().toMutableList())
             }
             rvAdapter.items = marvelCharsItems
 
             binding.rvMarvelChars.apply{
                 this.adapter = rvAdapter
-                this.layoutManager = lmanager
+                this.layoutManager = gManager
+
+                gManager.scrollToPositionWithOffset(pos, 10)
             }
 
         }
+        page ++
     }
 
     fun chargeDataRVDB(pos: Int) {
         lifecycleScope.launch(Dispatchers.Main){
 
             marvelCharsItems = withContext(Dispatchers.IO) {
-                var marvelCharsItems = MarvelLogic()
+                var items = MarvelLogic()
                     .getAllMarvelCharsDB()
                     .toMutableList()
 
-                if(marvelCharsItems.isEmpty()) {
-                    marvelCharsItems = (MarvelLogic().getAllMarvelChars(
+                if(items.isEmpty()) {
+                    items = (MarvelLogic().getAllMarvelChars(
                         0, page * 3))
-                    MarvelLogic().insertMarvelCharsToDB(marvelCharsItems)
+                    MarvelLogic().insertMarvelCharsToDB(items)
                 }
 
-                return@withContext marvelCharsItems
+                return@withContext items
             }
         }
 
@@ -154,7 +152,7 @@ class NewFragment : Fragment() {
 
         binding.rvMarvelChars.apply{
             this.adapter = rvAdapter
-            this.layoutManager = lmanager
+            this.layoutManager = gManager
             gManager.scrollToPositionWithOffset(pos, 10)
         }
         page++

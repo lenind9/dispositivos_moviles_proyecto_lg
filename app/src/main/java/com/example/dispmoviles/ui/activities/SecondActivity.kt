@@ -39,17 +39,17 @@ class SecondActivity : AppCompatActivity() {
             when(item.itemId) {
                 R.id.inicio -> {
                     FragmentsManager().replaceFragment(supportFragmentManager,
-                        binding.frmContainer.id, NewFragment())
+                        binding.frmContainer1.id, NewFragment())
                     true
                 }
                 R.id.favoritos -> {
                     FragmentsManager().replaceFragment(supportFragmentManager,
-                        binding.frmContainer.id, SecondFragment())
+                        binding.frmContainer1.id, SecondFragment())
                     true
                 }
-                R.id.apis -> {
+                R.id.ajustes -> {
                     FragmentsManager().replaceFragment(supportFragmentManager,
-                        binding.frmContainer.id, ThirdFragment())
+                        binding.frmContainer1.id, ThirdFragment())
                     true
                 }
                 else -> false

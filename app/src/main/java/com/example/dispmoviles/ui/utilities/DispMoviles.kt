@@ -7,8 +7,6 @@ import com.example.dispmoviles.data.entities.marvel.characters.database.MarvelCh
 
 class DispMoviles : Application() {
 
-    val name_class : String = "Admin"
-
     override fun onCreate(){
         super.onCreate()
         db = Room.databaseBuilder(applicationContext,
