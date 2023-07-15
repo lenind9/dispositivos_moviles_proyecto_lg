@@ -2,11 +2,14 @@ package com.example.dispositivosmoviles.ui.fragments
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import androidx.core.widget.addTextChangedListener
+import androidx.datastore.dataStore
+import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.fragment.app.Fragment
 
 import androidx.lifecycle.lifecycleScope
@@ -19,6 +22,7 @@ import com.example.dispositivosmoviles.logic.data.getMarvelCharsDB
 import com.example.dispositivosmoviles.logic.marvelLogic.MarvelLogic
 import com.example.dispositivosmoviles.ui.activities.DetailsMarvelItem
 import com.example.dispositivosmoviles.ui.adapters.MarvelAdapter
+import com.example.dispositivosmoviles.ui.data.UserDataStore
 import com.example.dispositivosmoviles.ui.utilities.DispositivosMoviles
 import com.example.dispositivosmoviles.ui.utilities.Metodos
 import com.google.android.material.snackbar.Snackbar
@@ -65,6 +69,15 @@ class FirstFragment : Fragment() {
 
     override fun onStart() {
         super.onStart();
+
+        lifecycleScope.launch(Dispatchers.Main) {
+            getDataStore()
+                .collect{user ->
+                Log.d("UCE", user.email)
+                Log.d("UCE", user.name)
+                Log.d("UCE", user.session)
+            }
+        }
 
 
         val names = arrayListOf<String>("A", "B", "C", "D", "E")
@@ -123,20 +136,6 @@ class FirstFragment : Fragment() {
 
     }
 
-    fun corrotine() {
-        lifecycleScope.launch(Dispatchers.Main) {
-            var name = "Bayron"
-
-            name = withContext(Dispatchers.IO)
-            {
-                name = "Jairo"
-                return@withContext name
-            }
-
-            binding.cardView.radius
-        }
-    }
-
     fun sendMarvelItem(item: MarvelChars) {
         //Intent(contexto de la activity, .class de la activity)
         val i = Intent(requireActivity(), DetailsMarvelItem::class.java)
@@ -174,8 +173,6 @@ class FirstFragment : Fragment() {
 
     }
 
-
-
     fun chargeDataRVInit(limit: Int, offset: Int) {
 
         if(Metodos().isOnline(requireActivity())){
@@ -201,10 +198,16 @@ class FirstFragment : Fragment() {
             ).show()
         }
 
-
-
     }
 
-
+    private fun getDataStore() : Flow<UserDataStore> {
+        requireActivity().dataStore.data.map { prefs ->
+            UserDataStore(
+                prefs[stringPreferencesKey("usuario")].orEmpty(),
+                prefs[stringPreferencesKey("contrasenia")].orEmpty(),
+                prefs[stringPreferencesKey("pass")].orEmpty()
+            )
+        }
+    }
 
 }

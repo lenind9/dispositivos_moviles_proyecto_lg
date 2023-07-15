@@ -4,21 +4,19 @@ import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
-import android.widget.Button
-import android.widget.TextView
-import android.widget.Toast
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.lifecycleScope
 import com.example.dispositivosmoviles.R
 import com.example.dispositivosmoviles.databinding.ActivityMainBinding
 import com.example.dispositivosmoviles.ui.validator.LoginValidator
-
-
 import com.google.android.material.snackbar.Snackbar
+import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
 
-    //Para enalzar y utilizar el Binding
+    val Context.dataStore: DataStore<Preferences>
+        by preferencesDataStore(name = "settings")
+
     private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,6 +44,10 @@ class MainActivity : AppCompatActivity() {
             )
 
             if(check){
+                lifecycleScope.launch(Dispatchers.IO){
+                    saveDataStore(binding.txtName.text.toString())
+                }
+
                 var intent = Intent(this, PrincipalActivity::class.java)
                 intent.putExtra("var1", binding.txtName.text.toString())
                 intent.putExtra("var2", 2)
@@ -58,6 +60,15 @@ class MainActivity : AppCompatActivity() {
                 snackbar.setBackgroundTint(getResources().getColor(R.color.black))
                 snackbar.show()
             }
+        }
+    }
+
+    private suspend fun saveDataStore(stringData: String) {
+        dataStore.edit{ prefs ->
+            prefs[stringPreferencesKey("usuario")] = stringData
+            //UUID: Universal Unique Identifier
+            prefs[stringPreferencesKey("session")] = java.util.UUID.randomUUID().toString()
+            prefs[stringPreferencesKey("email")] = "dispositivosmoviles@uce.edu.ec"
         }
     }
 

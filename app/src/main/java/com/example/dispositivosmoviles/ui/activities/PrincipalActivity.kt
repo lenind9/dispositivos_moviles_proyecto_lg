@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import com.example.dispositivosmoviles.MainActivity
 import com.example.dispositivosmoviles.R
 import com.example.dispositivosmoviles.databinding.ActivityPrincipalBinding
 
