@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.speech.RecognizerIntent
 import android.util.Log
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.result.contract.ActivityResultContracts.*
@@ -22,6 +23,7 @@ import com.example.dispositivosmoviles.ui.validator.LoginValidator
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.util.Locale
 import java.util.UUID
 
 val Context.dataStore: DataStore<Preferences>
@@ -76,11 +78,6 @@ class MainActivity : AppCompatActivity() {
         }
 
         binding.btnTwitter.setOnClickListener {
-            /*val intent = Intent(
-                Intent.ACTION_VIEW,
-                //Uri.parse("http://google.com.ec")
-                Uri.parse("tel:+593995943030")
-            )*/
 
             val intent = Intent(
                 Intent.ACTION_WEB_SEARCH
@@ -98,35 +95,95 @@ class MainActivity : AppCompatActivity() {
         val appResultLocal = registerForActivityResult(StartActivityForResult()) {
             resultActivity ->
 
+            val sn = Snackbar.make(
+                binding.txtName,
+                "",
+                Snackbar.LENGTH_LONG
+            )
+
             //contrato con las clausulas a ejecutar
-            when(resultActivity.resultCode) {
+            var message = when(resultActivity.resultCode) {
                 RESULT_OK -> {
-                    Snackbar.make(
-                        binding.txtName,
-                        "Resultado existoso",
-                        Snackbar.LENGTH_LONG).show()
+                    sn.setBackgroundTint(resources.getColor(R.color.blue))
+                    resultActivity.data?.getStringExtra("result")
+                        .orEmpty() //si no hay nada, devuelve vacio
                 }
                 RESULT_CANCELED -> {
-                    Snackbar.make(
-                        binding.txtName,
-                        "Resultado fallido",
-                        Snackbar.LENGTH_LONG).show()
+                    sn.setBackgroundTint(resources.getColor(R.color.red))
+                    resultActivity.data?.getStringExtra("result")
+                        .orEmpty()
                 }
                 else -> {
-                    Snackbar.make(
-                        binding.txtName,
-                        "Resultado dudoso",
-                        Snackbar.LENGTH_LONG).show()
+                    "Dudoso"
                 }
             }
+            sn.setText(message)
+            sn.show()
+        }
 
+        val speechToText = registerForActivityResult(StartActivityForResult()){
+            activityResult ->
+
+            val sn = Snackbar.make(
+                binding.txtName,
+                "",
+                Snackbar.LENGTH_LONG
+            )
+
+            var message = ""
+
+            when(activityResult.resultCode){
+                RESULT_OK -> {
+                    val msg = activityResult.
+                    data?.getStringArrayListExtra(
+                        RecognizerIntent.EXTRA_RESULTS
+                    )?.get(0).toString()
+
+                    if(msg.isNotEmpty()){
+                        val intent = Intent(
+                            Intent.ACTION_WEB_SEARCH
+                        )
+                        intent.setClassName(
+                            "com.google.android.googlequicksearchbox",
+                            "com.google.android.googlequicksearchbox.SearchActivity"
+                        )
+                        intent.putExtra(SearchManager.QUERY, msg)
+                        startActivity(intent)
+                    }
+                }
+                RESULT_CANCELED -> {
+                    message = "Proceso cancelado"
+                    sn.setBackgroundTint(resources.getColor(R.color.red))
+                }
+                else -> {
+                    "Ocurrio un error"
+                    sn.setBackgroundTint(resources.getColor(R.color.red))
+                }
+
+            }
         }
 
         binding.btnFacebook.setOnClickListener {
-            val resIntent = Intent(this, ResultActivity::class.java)
-            appResultLocal.launch(resIntent)
 
+            val intentSpeech = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH)
+            intentSpeech.putExtra(
+                RecognizerIntent.EXTRA_LANGUAGE_MODEL,
+                RecognizerIntent.LANGUAGE_MODEL_FREE_FORM //modelo de lenguaje libre
+            )
+            intentSpeech.putExtra(
+                RecognizerIntent.EXTRA_LANGUAGE, //en que idioma va a hblar
+                Locale.getDefault() //toma el lenguaje del dispositivo
+            )
+            intentSpeech.putExtra(
+                RecognizerIntent.EXTRA_PROMPT,
+                "Di algo..."
+            )
+            speechToText.launch(intentSpeech)
+
+            /*val resIntent = Intent(this, ResultActivity::class.java)
+            appResultLocal.launch(resIntent)*/
         }
+
     }
 
     private suspend fun saveDataStore(stringData: String) {
