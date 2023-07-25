@@ -6,12 +6,15 @@ import android.app.SearchManager
 import android.content.Context
 import android.content.Intent
 import android.location.Geocoder
+import android.location.Location
 import android.net.Uri
 import android.os.Bundle
+import android.os.Looper
 import android.speech.RecognizerIntent
 import android.util.Log
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.result.contract.ActivityResultContracts.*
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.PermissionChecker.PermissionResult
 import androidx.datastore.core.DataStore
@@ -25,7 +28,11 @@ import com.example.dispositivosmoviles.R
 import com.example.dispositivosmoviles.databinding.ActivityMainBinding
 import com.example.dispositivosmoviles.ui.validator.LoginValidator
 import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationCallback
+import com.google.android.gms.location.LocationRequest
+import com.google.android.gms.location.LocationResult
 import com.google.android.gms.location.LocationServices
+import com.google.android.gms.location.Priority
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -40,6 +47,104 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     //interfaz que nos va a permitir acceder a la ubicacion del ususario
     private lateinit var fusedLocationProviderClient : FusedLocationProviderClient
+    private lateinit var locationRequest : LocationRequest
+    private lateinit var locationCallback : LocationCallback
+
+    private var currentLocation : Location? = null
+
+    private val speechToText = registerForActivityResult(StartActivityForResult()){
+            activityResult ->
+
+        val sn = Snackbar.make(
+            binding.txtName,
+            "",
+            Snackbar.LENGTH_LONG
+        )
+
+        var message = ""
+
+        when(activityResult.resultCode){
+            RESULT_OK -> {
+                val msg = activityResult.
+                data?.getStringArrayListExtra(
+                    RecognizerIntent.EXTRA_RESULTS
+                )?.get(0).toString()
+
+                if(msg.isNotEmpty()){
+                    val intent = Intent(
+                        Intent.ACTION_WEB_SEARCH
+                    )
+                    intent.setClassName(
+                        "com.google.android.googlequicksearchbox",
+                        "com.google.android.googlequicksearchbox.SearchActivity"
+                    )
+                    intent.putExtra(SearchManager.QUERY, msg)
+                    startActivity(intent)
+                }
+            }
+            RESULT_CANCELED -> {
+                message = "Proceso cancelado"
+                sn.setBackgroundTint(resources.getColor(R.color.red))
+            }
+            else -> {
+                "Ocurrio un error"
+                sn.setBackgroundTint(resources.getColor(R.color.red))
+            }
+
+        }
+    }
+
+    @SuppressLint("MissingPermission")
+    private val locationContract = registerForActivityResult(RequestPermission()) {
+            isGranted ->
+        when(isGranted){
+            true -> {
+                val task = fusedLocationProviderClient.lastLocation
+                task.addOnSuccessListener {
+                    location ->
+
+                    fusedLocationProviderClient.requestLocationUpdates(
+                        locationRequest, //tipo ubicacion, tiempo
+                        locationCallback, //resultado
+                        Looper.getMainLooper() //loop
+                    )
+                }
+
+                //cuando falla
+                task.addOnFailureListener{
+                    val alert = AlertDialog.Builder(this)
+                    alert.apply {
+                        setTitle("Alerta")
+                        setMessage("Existe un problema con el sistema de posicionamiento global en el sistema")
+                        setPositiveButton("Ok") {dialog, id ->
+                            dialog.dismiss()
+                        }
+                        setNegativeButton("Cancelar") {dialog, id ->
+                            dialog.dismiss()
+                        }
+                        setCancelable(false) //no puede tocar fuera el dialog hasta que toque alguna opcion
+                    }.create()
+                    alert.show()
+                }
+
+            }
+
+            //Informa al usuario de porque se necesita los permisos
+            shouldShowRequestPermissionRationale(
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) -> {
+                Snackbar.make(binding.txtName,
+                    "Ayude con el permiso",
+                    Snackbar.LENGTH_LONG)
+                    .show()
+            }
+            false -> {
+                Snackbar.make(binding.txtName, "Permiso denegado", Snackbar.LENGTH_LONG)
+                    .show()
+            }
+        }
+
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,6 +153,28 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
+        locationRequest = LocationRequest.Builder(
+            Priority.PRIORITY_HIGH_ACCURACY, 2000
+        )
+            //.setMaxUpdates(3) //cuantas veces se va a pedir la actu
+            .build() //exactitud de ubicacion y tiempo en ms
+        locationCallback = object : LocationCallback() {
+            //Ctrl + O, override
+            override fun onLocationResult(locationResult: LocationResult) {
+                super.onLocationResult(locationResult)
+
+                if(locationResult != null){
+                    locationResult.locations.forEach{
+                        location ->
+                        currentLocation = location
+                        Log.d("UCE",
+                            "Ubicacion: ${location.latitude}, " +
+                                    "${location.longitude}")
+                    }
+                }
+
+            }
+        }
     }
 
     override fun onStart() {
@@ -59,7 +186,13 @@ class MainActivity : AppCompatActivity() {
         super.onDestroy()
     }
 
-    @SuppressLint("MissingPermission")
+    override fun onPause() {
+        super.onPause()
+        //Para detener la obtencion de ubicacion al cambiar de activity
+        fusedLocationProviderClient.removeLocationUpdates(
+            locationCallback)
+    }
+
     private fun initClass() {
         binding.btnLogin.setOnClickListener {
 
@@ -88,50 +221,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        val locationContract = registerForActivityResult(RequestPermission()) {
-            isGranted ->
-            when(isGranted){
-                true -> {
-                    fusedLocationProviderClient.lastLocation.addOnSuccessListener {
-                        it.longitude
-                        it.latitude
 
-                        val a = Geocoder(this)
-                        a.getFromLocation(it.latitude, it.longitude, 1)
-                    }
-
-                    /*val task = fusedLocationProviderClient.lastLocation
-                    task.addOnSuccessListener {
-                        if(task.result != null) {
-                            Snackbar.make(binding.txtName,
-                                "${it.latitude}, ${it.longitude}",
-                                Snackbar.LENGTH_LONG)
-                                .show()
-                        } else {
-                            Snackbar.make(binding.txtName,
-                                "Encienda el GPS, por favor",
-                                Snackbar.LENGTH_LONG)
-                                .show()
-                        }
-                    }*/
-                }
-
-                //Informa al usuario de porque se necesita los permisos
-                shouldShowRequestPermissionRationale(
-                    Manifest.permission.ACCESS_FINE_LOCATION
-                ) -> {
-                    Snackbar.make(binding.txtName,
-                        "Ayude con el permiso",
-                        Snackbar.LENGTH_LONG)
-                        .show()
-                }
-                false -> {
-                    Snackbar.make(binding.txtName, "Permiso denegado", Snackbar.LENGTH_LONG)
-                    .show()
-                }
-            }
-
-        }
 
         binding.btnTwitter.setOnClickListener {
 
@@ -177,48 +267,6 @@ class MainActivity : AppCompatActivity() {
             }
             sn.setText(message)
             sn.show()
-        }
-
-        val speechToText = registerForActivityResult(StartActivityForResult()){
-            activityResult ->
-
-            val sn = Snackbar.make(
-                binding.txtName,
-                "",
-                Snackbar.LENGTH_LONG
-            )
-
-            var message = ""
-
-            when(activityResult.resultCode){
-                RESULT_OK -> {
-                    val msg = activityResult.
-                    data?.getStringArrayListExtra(
-                        RecognizerIntent.EXTRA_RESULTS
-                    )?.get(0).toString()
-
-                    if(msg.isNotEmpty()){
-                        val intent = Intent(
-                            Intent.ACTION_WEB_SEARCH
-                        )
-                        intent.setClassName(
-                            "com.google.android.googlequicksearchbox",
-                            "com.google.android.googlequicksearchbox.SearchActivity"
-                        )
-                        intent.putExtra(SearchManager.QUERY, msg)
-                        startActivity(intent)
-                    }
-                }
-                RESULT_CANCELED -> {
-                    message = "Proceso cancelado"
-                    sn.setBackgroundTint(resources.getColor(R.color.red))
-                }
-                else -> {
-                    "Ocurrio un error"
-                    sn.setBackgroundTint(resources.getColor(R.color.red))
-                }
-
-            }
         }
 
         binding.btnFacebook.setOnClickListener {
