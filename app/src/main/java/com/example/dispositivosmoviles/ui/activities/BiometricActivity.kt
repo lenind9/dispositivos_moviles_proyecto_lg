@@ -4,26 +4,51 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.Settings
+import android.view.View
+import androidx.activity.viewModels
 import androidx.biometric.BiometricManager
 import androidx.biometric.BiometricManager.Authenticators.BIOMETRIC_STRONG
 import androidx.biometric.BiometricManager.Authenticators.DEVICE_CREDENTIAL
 import androidx.biometric.BiometricPrompt
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.lifecycleScope
 import com.example.dispositivosmoviles.R
 import com.example.dispositivosmoviles.databinding.ActivityBiometricBinding
+import com.example.dispositivosmoviles.ui.viewmodels.BiometricViewModel
 import com.google.android.material.snackbar.Snackbar
+import kotlinx.coroutines.launch
 
 class BiometricActivity : AppCompatActivity() {
 
     private lateinit var binding : ActivityBiometricBinding
+    private val biometricViewModel by viewModels<BiometricViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityBiometricBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.btnAutentication.setOnClickListener{
-            autenticateBiometric()
+        binding.btnAutentication.setOnClickListener {
+            //autenticateBiometric()
+            lifecycleScope.launch {
+                biometricViewModel.chargingData()
+            }
+        }
+
+        // Cuando hay un cambio en isLoading, se ejecuta el observe
+        biometricViewModel.isLoading.observe(this) {
+            isLoading ->
+            if(isLoading) {
+                binding.layoutMain.visibility = View.GONE
+                binding.layoutMainCopia.visibility = View.VISIBLE
+            } else {
+                binding.layoutMain.visibility = View.VISIBLE
+                binding.layoutMainCopia.visibility = View.GONE
+            }
+        }
+
+        lifecycleScope.launch {
+            biometricViewModel.chargingData()
         }
     }
 
@@ -72,7 +97,7 @@ class BiometricActivity : AppCompatActivity() {
         val biometricManager = BiometricManager.from(this)
 
         when(biometricManager.canAuthenticate(
-            BIOMETRIC_STRONG or DEVICE_CREDENTIAL
+            BIOMETRIC_STRONG //or DEVICE_CREDENTIAL
         )) {
             //hay hw y huella
             BiometricManager.BIOMETRIC_SUCCESS -> {
