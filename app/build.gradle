@@ -3,7 +3,7 @@ plugins {
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-parcelize'
     id 'kotlin-kapt'
-
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -92,9 +92,15 @@ dependencies {
     // LiveData
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.6.1"
 
-    //Biometrico
+    // Biometrico
     implementation "androidx.biometric:biometric:1.2.0-alpha05"
 
-    //Shimmer
+    // Shimmer
     implementation("com.facebook.shimmer:shimmer:0.1.0@aar")
+
+    // Firebase
+    implementation(platform("com.google.firebase:firebase-bom:32.2.2"))
+    implementation("com.google.firebase:firebase-analytics-ktx")
+    implementation("com.google.firebase:firebase-auth-ktx")
+
 }
