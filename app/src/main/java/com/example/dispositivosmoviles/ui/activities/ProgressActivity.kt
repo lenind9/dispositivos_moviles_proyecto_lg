@@ -32,6 +32,7 @@ class ProgressActivity : AppCompatActivity() {
         })
 
         progressViewModel.items.observe(this, Observer {
+            //it[10].name: obtiene el nombre del décimo marvelchar
             Toast.makeText(this, it[10].name, Toast.LENGTH_SHORT).show()
             //Para pasar a otro activity despues de ejecutar el progressBar
             startActivity(Intent(this, NotificationActivity::class.java))

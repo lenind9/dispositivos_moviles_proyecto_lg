@@ -22,4 +22,12 @@
     <color name="light_blue">#00A2F5</color>
     <color name="blue">#23599B</color>
     <color name="red_marvel">#B70A0B</color>
+
+    <color name="anime_orange">#FAB718</color>
+    <color name="anime_orange2">#F79C1C</color>
+    <color name="anime_orange3">#F47521</color>
+    
+    <color name="turquoise">#2ABDBB</color>
+    <color name="dark_turquoise">#167777</color>
+    <color name="light_turquoise">#9CDFDF</color>
 </resources>

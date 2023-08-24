@@ -130,16 +130,13 @@ class SecondFragment : Fragment() {
             //rvAdapter.items = JikanAnimeLogic().getAllAnimes()
             marvelCharsItems = withContext(Dispatchers.IO) {
                 return@withContext (MarvelLogic().getMarvelChars(
-                    "spider", page * 3
-                ))
+                    "spider", page * 3))
             }
             rvAdapter.items = marvelCharsItems
 
             binding.rvMarvelChars.apply {
                 this.adapter = rvAdapter;
                 this.layoutManager = lManager;
-
-
                 gManager.scrollToPositionWithOffset(pos, 10)
             }
         }

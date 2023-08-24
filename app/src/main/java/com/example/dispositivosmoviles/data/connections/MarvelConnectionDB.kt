@@ -13,5 +13,4 @@ abstract class MarvelConnectionDB : RoomDatabase(){
 
     abstract fun marvelDao() : MarvelCharsDAO
 
-
 }

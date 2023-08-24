@@ -2,11 +2,12 @@ package com.example.dispositivosmoviles.ui.activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import com.example.dispositivosmoviles.logic.data.MarvelChars
 import com.example.dispositivosmoviles.databinding.ActivityDetailsMarvelItemBinding
 import com.squareup.picasso.Picasso
 
-//AQUI SE PASA LOS DATOS DE EL ELEMTNO QUE SE SELECCIONA EN LA LISTA DE animes
+//AQUI SE PASA LOS DATOS DEL ELEMENTO QUE SE SELECCIONA EN LA LISTA DE animes
 class DetailsMarvelItem : AppCompatActivity() {
 
     private lateinit var binding: ActivityDetailsMarvelItemBinding
@@ -33,6 +34,7 @@ class DetailsMarvelItem : AppCompatActivity() {
         val item = intent.getParcelableExtra<MarvelChars>("item")
 
         if (item !== null){
+            Log.w("UCE", "Details Marvel")
             binding.txtName.text = item.name
             binding.txtComic.text = item.comic
             Picasso.get().load(item.image).into(binding.imgMarvel)

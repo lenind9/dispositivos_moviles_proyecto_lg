@@ -57,7 +57,6 @@ class FirstFragment : Fragment() {
             layoutInflater, container, false
         )
 
-
         lManager = LinearLayoutManager(
             requireActivity(),
             LinearLayoutManager.VERTICAL,
@@ -94,7 +93,7 @@ class FirstFragment : Fragment() {
         chargeDataRVAPI(limit, offset)
 
         binding.rvSwipe.setOnRefreshListener {
-            chargeDataRVInit(limit, offset)
+            chargeDataRVAPI(limit, offset)
             binding.rvSwipe.isRefreshing = false
             lManager.scrollToPositionWithOffset(5, 20)
         }
@@ -166,13 +165,12 @@ class FirstFragment : Fragment() {
             rvAdapter.items = marvelCharsItems
 
             binding.rvMarvelChars.apply {
-                this.adapter = rvAdapter;
-                this.layoutManager = gManager;
+                this.adapter = rvAdapter
+                this.layoutManager = gManager
 
             }
             this@FirstFragment.offset = offset+ limit;
         }
-
     }
 
     fun chargeDataRVInit(limit: Int, offset: Int) {
@@ -194,16 +192,15 @@ class FirstFragment : Fragment() {
 
                 }
             }
-        }else{
+        } else {
             Snackbar.make(binding.cardView, "no hay conexion",
                 Snackbar.LENGTH_LONG
             ).show()
         }
-
     }
 
     private fun getDataStore() {
-        requireActivity().dataStore.data.map { prefs ->
+        requireActivity().dataStore.data.map {prefs ->
             UserDataStore(
                 prefs[stringPreferencesKey("usuario")].orEmpty(),
                 prefs[stringPreferencesKey("contrasenia")].orEmpty(),

@@ -27,16 +27,14 @@ class ProgressViewModel : ViewModel() {
 
     fun sumInBackground() {
         viewModelScope.launch(Dispatchers.IO) {
-            val state = View.VISIBLE
-            progressState.postValue(state)
+            progressState.postValue(View.VISIBLE)
 
             var total = 0
             for(i in 1 .. 300000){
                 total += i
             }
 
-            val state1 = View.GONE
-            progressState.postValue(state1)
+            progressState.postValue(View.GONE)
         }
     }
 

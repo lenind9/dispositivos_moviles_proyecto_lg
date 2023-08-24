@@ -12,7 +12,7 @@ import com.squareup.picasso.Picasso
 class MarvelAdapter(
     //private var items: List<MarvelChars>,
     /*private var fnClick: (MarvelChars) -> Unit,
-    private var fnSave : (MarvelChars) -> Boolean  //deveulte tru/false si se pasó o no*/
+    private var fnSave : (MarvelChars) -> Boolean  //devuelve true/false si se pasó o no*/
     private var fnClick: (MarvelChars) -> Unit):
 
     RecyclerView.Adapter<MarvelAdapter.MarvelViewHolder>() {
@@ -33,7 +33,6 @@ class MarvelAdapter(
                 //Snackbar.make(binding.imgMarvel, item.name, Snackbar.LENGTH_SHORT).show()
             }
         }
-
 
     }
 

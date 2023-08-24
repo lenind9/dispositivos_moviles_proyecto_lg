@@ -191,14 +191,21 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         auth = Firebase.auth
 
+        /*
         binding.btnLogin.setOnClickListener {
             authWithFirebaseEmail(
+                binding.txtEmail.text.toString(),
+                binding.txtPassword.text.toString()
+            )
+        }*/
+
+        binding.btnLogin.setOnClickListener {
+            signInWithEmailAndPassword(
                 binding.txtEmail.text.toString(),
                 binding.txtPassword.text.toString()
             )
@@ -302,7 +309,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
-        //initClass()
+        initClass()
     }
 
     override fun onDestroy() {
@@ -318,6 +325,11 @@ class MainActivity : AppCompatActivity() {
 
     private fun initClass() {
         binding.btnLogin.setOnClickListener {
+
+            /*signInWithEmailAndPassword(
+                binding.txtEmail.text.toString(),
+                binding.txtPassword.text.toString()
+            )*/
 
             val check = LoginValidator().checkLogin(
                 binding.txtName.text.toString(), binding.txtPass.text.toString()

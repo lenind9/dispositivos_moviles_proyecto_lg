@@ -20,7 +20,7 @@ data class Result(
 //Funcion de extension para que me devuelva un MarvelChar custom
 fun Result.getMarvelChars() : MarvelChars{
 
-    var comic: String = "No available"
+    var comic: String = "Not available"
 
     if (comics.items.isNotEmpty()) {
         comic = comics.items[0].name

@@ -99,10 +99,6 @@ class MarvelLogic {
             .getDbInstance()
             .marvelDao()
             .insertMarvelCharacter(itemsDB)
-
-
     }
-
-
 
 }
