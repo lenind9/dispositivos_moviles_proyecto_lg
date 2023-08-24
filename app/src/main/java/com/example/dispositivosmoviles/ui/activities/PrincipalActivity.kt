@@ -4,6 +4,9 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_NO
+import androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_YES
 import com.example.dispositivosmoviles.MainActivity
 import com.example.dispositivosmoviles.R
 import com.example.dispositivosmoviles.databinding.ActivityPrincipalBinding
@@ -22,14 +25,28 @@ class PrincipalActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityPrincipalBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        binding.swDarkMode.setOnCheckedChangeListener { _, isSelected ->
+            if(isSelected) {
+                enableDarkMode()
+            } else {
+                disableDarkMode()
+            }
+        }
+    }
+
+    private fun enableDarkMode(){
+        AppCompatDelegate.setDefaultNightMode(MODE_NIGHT_YES)
+        delegate.applyDayNight()
+    }
+
+    private fun disableDarkMode(){
+        AppCompatDelegate.setDefaultNightMode(MODE_NIGHT_NO)
+        delegate.applyDayNight()
     }
 
     override fun onStart() {
         super.onStart()
-
-        //Cambia el texto del txtView a "Bienvenido"
-        var name: String = ""
-        binding.txtView.text = "Bienvenido $name"
         Log.d("UCE", "Entrando a Start")
 
         binding.btnRetorno.setOnClickListener {

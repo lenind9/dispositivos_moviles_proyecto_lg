@@ -17,13 +17,12 @@ class AnimeAdapter(
     var items: List<AnimeData> = listOf()
 
     class AnimeViewHolder(view: View): RecyclerView.ViewHolder(view) {
-
-        //private val binding: MarvelCharactersBinding = MarvelCharactersBinding.bind(view)
         private val binding: JikanAnimesBinding = JikanAnimesBinding.bind(view)
 
         fun render(item: AnimeData, fnClick: (AnimeData) -> Unit){
             binding.txtName.text = item.name
-            binding.txtComic.text = "Episodios: " + item.episodes.toString()
+            var episodios = item.episodes.toString()
+            binding.txtComic.text = "Episodios: $episodios"
             Picasso.get().load(item.image).into(binding.imgImage)
 
             itemView.setOnClickListener{

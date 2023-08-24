@@ -27,7 +27,8 @@ class DetailsAnimeItem : AppCompatActivity() {
         if (item !== null){
             Log.w("UCE", "Details Anime")
             binding.txtName.text = item.name
-            binding.txtEpisodios.text = "Episodios: " + item.episodes.toString()
+            var episodios = item.episodes.toString()
+            binding.txtEpisodios.text = "Episodios: $episodios"
             Picasso.get().load(item.image).into(binding.imgAnime)
             binding.txtDescription.text = item.synopsis
 

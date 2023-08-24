@@ -4,19 +4,19 @@
     <item
         android:id="@+id/inicio"
         android:enabled="true"
-        android:icon="@drawable/home_24"
-        android:title="@string/menu_inicio"
+        android:icon="@drawable/marvel_logo1"
+        android:title="@string/menu_marvel"
         />
     <item
         android:id="@+id/favoritos"
         android:enabled="true"
-        android:icon="@drawable/baseline_favorite_24"
-        android:title="@string/menu_favoritos"
+        android:icon="@drawable/spider_man_logo"
+        android:title="@string/menu_spider_man"
         />
     <item
         android:id="@+id/ajustes"
         android:enabled="true"
-        android:icon="@drawable/baseline_settings_24"
-        android:title="@string/menu_ajustes"
+        android:icon="@drawable/fullmetal_alchemist_logo"
+        android:title="@string/menu_my_anime_list"
         />
 </menu>
