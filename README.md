@@ -6,33 +6,33 @@ Aplicación de Android con distintas funcionalidades, principalmente hecha con l
 
 Este proyecto de Android ofrece varias funcionalidades y características como:
 
-- **Autenticación segura: ** Implementa Firebase Authentication para permitir que los usuarios creen cuentas y se autentiquen mediante un correo electrónico y contraseña.
+- **Autenticación segura:** Implementa Firebase Authentication para permitir que los usuarios creen cuentas y se autentiquen mediante un correo electrónico y contraseña.
 
 - **Carga de personajes de Marvel:** Obtiene una lista de personajes de Marvel desde la API de Marvel mismo, mostrando sus nombres, cómics e imágenes.
 
-- **Explora los mejores animes: ** Accede al top de animes más populares utilizando la API Jikan y muestra una lista de los animes mejor valorados en MyAnimeList.
+- **Explora los mejores animes:** Accede al top de animes más populares utilizando la API Jikan y muestra una lista de los animes mejor valorados en MyAnimeList.
 
-- **Detalles de personajes: ** Permite ver información detallada de un personaje o anime al hacer clic en su imagen. Muestra datos como el nombre, cómic relacionado y sinopsis en el caso de los animes.
+- **Detalles de personajes:** Permite ver información detallada de un personaje o anime al hacer clic en su imagen. Muestra datos como el nombre, cómic relacionado y sinopsis en el caso de los animes.
 
-- **Búsqueda y filtrado: ** Utiliza un campo de búsqueda para filtrar la lista de personajes por nombre.
+- **Búsqueda y filtrado:** Utiliza un campo de búsqueda para filtrar la lista de personajes por nombre.
 
-- **Modo oscuro: **Ofrece la opción de cambiar entre el modo claro y oscuro para adaptarse a las preferencias del usuario.
+- **Modo oscuro:**Ofrece la opción de cambiar entre el modo claro y oscuro para adaptarse a las preferencias del usuario.
 
-- **Permisos de ubicación: ** Solicita y obtiene permiso para acceder a la ubicación del dispositivo.
+- **Permisos de ubicación:** Solicita y obtiene permiso para acceder a la ubicación del dispositivo.
 
-- **Voz a texto: ** Incorpora la capacidad de convertir voz en texto y realizar búsquedas en Google.
+- **Voz a texto:** Incorpora la capacidad de convertir voz en texto y realizar búsquedas en Google.
 
-- **Autenticación biométrica: ** Permite autenticarse utilizando huellas dactilares, lo que garantiza que solo el usuario pueda acceder a la aplicación y sus datos sensibles.
+- **Autenticación biométrica:** Permite autenticarse utilizando huellas dactilares, lo que garantiza que solo el usuario pueda acceder a la aplicación y sus datos sensibles.
 
-- **Cámara: ** Utiliza la cámara del celular para tomar una foto y luego mostrarla.
+- **Cámara:** Utiliza la cámara del celular para tomar una foto y luego mostrarla.
 
-- **Temporizador y notificaciones: ** Configura recordatorios usando el temporizador para recibir notificaciones en momentos específicos.
+- **Temporizador y notificaciones:** Configura recordatorios usando el temporizador para recibir notificaciones en momentos específicos.
 
-- **Acciones rápidas: **Acceso rápido a las funcionalidades principales utilizando un menú en la parte inferior de la pantalla principal.
+- **Acciones rápidas:**Acceso rápido a las funcionalidades principales utilizando un menú en la parte inferior de la pantalla principal.
 
-- **Carga eficiente de datos: ** Utiliza Retrofit para realizar solicitudes a la API de Marvel y obtener datos actualizados. Almacena datos en una base de datos local con Room para una carga rápida y sin conexión.
+- **Carga eficiente de datos:** Utiliza Retrofit para realizar solicitudes a la API de Marvel y obtener datos actualizados. Almacena datos en una base de datos local con Room para una carga rápida y sin conexión.
 
-- **ViewModel para la gestión de estados: **  Administra el estado y la lógica de la interfaz de usuario de manera eficiente, manteniendo una separación clara entre la lógica de presentación y la interacción del usuario.
+- **ViewModel para la gestión de estados:**  Administra el estado y la lógica de la interfaz de usuario de manera eficiente, manteniendo una separación clara entre la lógica de presentación y la interacción del usuario.
 
 - **Carga visual con Shimmer:** Brinda una experiencia de usuario más atractiva durante la carga de contenido.
 
@@ -61,7 +61,6 @@ Este proyecto de Android ofrece varias funcionalidades y características como:
 |----------|:-------------:|:-------------:|:-------------:
 
 | ![notificacion](images/notificacion_oscuro.png) | ![noti](images/noti_oscuro.png) |
-|----------|:-------------:|:
 
 ## Librerías Utilizadas
 **GIFs**
