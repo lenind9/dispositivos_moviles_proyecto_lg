@@ -16,7 +16,7 @@ Este proyecto de Android ofrece varias funcionalidades y características como:
 
 - **Búsqueda y filtrado:** Utiliza un campo de búsqueda para filtrar la lista de personajes por nombre.
 
-- **Modo oscuro:**Ofrece la opción de cambiar entre el modo claro y oscuro para adaptarse a las preferencias del usuario.
+- **Modo oscuro:** Ofrece la opción de cambiar entre el modo claro y oscuro para adaptarse a las preferencias del usuario.
 
 - **Permisos de ubicación:** Solicita y obtiene permiso para acceder a la ubicación del dispositivo.
 
@@ -28,7 +28,7 @@ Este proyecto de Android ofrece varias funcionalidades y características como:
 
 - **Temporizador y notificaciones:** Configura recordatorios usando el temporizador para recibir notificaciones en momentos específicos.
 
-- **Acciones rápidas:**Acceso rápido a las funcionalidades principales utilizando un menú en la parte inferior de la pantalla principal.
+- **Acciones rápidas:** Acceso rápido a las funcionalidades principales utilizando un menú en la parte inferior de la pantalla principal.
 
 - **Carga eficiente de datos:** Utiliza Retrofit para realizar solicitudes a la API de Marvel y obtener datos actualizados. Almacena datos en una base de datos local con Room para una carga rápida y sin conexión.
 
