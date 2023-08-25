@@ -21,7 +21,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="80dp"
-        android:text="Capturar"
+        android:text="Tomar foto"
+        android:backgroundTint="@color/turquoise"
+        app:icon="@drawable/baseline_camera_alt_24"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imgCapture" />

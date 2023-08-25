@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">DispositivosMoviles</string>
     <string name="app_titulo">Proyecto Final</string>
-    <string name="app_welcome_menu">¡Hola! Es bueno verte nuevamente</string>
+    <string name="app_welcome_menu">Ingresa tu correo y contraseña</string>
     <string name="app_opciones">Diferentes funcionalidades de la aplicación:</string>
     <string name="Olvido">¿Olvidó su contraseña?</string>
     <string name="Registrese">Regístrese</string>

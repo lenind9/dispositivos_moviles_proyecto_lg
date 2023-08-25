@@ -37,4 +37,69 @@
         <item name="android:background">@color/dark_turquoise</item>
     </style>
 
+    <style name="mainStyle">
+        <item name="android:background">@color/dark_turquoise</item>
+    </style>
+
+    <style name="logoStyle">
+        <item name="android:src">@drawable/logo_app2</item>
+    </style>
+
+    <style name="switchStyle">
+        <item name="thumbTint">@color/white</item>
+    </style>
+
+    <style name="textTitle">
+        <item name="android:fontFamily"> @font/cabin </item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textStyle"> bold </item>
+        <item name="android:textSize"> 30sp </item>
+        <item name="android:gravity">center_horizontal</item>
+    </style>
+
+    <style name="subText">
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="funcionalidadesExtra">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textAlignment">center</item>
+    </style>
+
+    <style name="cameraStyle">
+        <item name="tint">@color/light_turquoise</item>
+        <item name="android:src">@drawable/baseline_camera_alt_24</item>
+    </style>
+
+    <style name="notiStyle">
+        <item name="tint">@color/light_turquoise</item>
+        <item name="android:src">@drawable/baseline_notifications_active_24</item>
+    </style>
+
+    <style name="biometricStyle">
+        <item name="tint">@color/white</item>
+        <item name="android:src">@drawable/ic_fingerprint_24</item>
+    </style>
+
+    <style name="btnProgress1">
+        <item name="android:text">Ejecutar 3 seg</item>
+        <item name="android:backgroundTint">@color/light_blue</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="btnProgress2">
+        <item name="android:text">Ir a notificación</item>
+        <item name="android:backgroundTint">@color/red_marvel</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="btnNoti1">
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="editTextStyle">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
 </resources>

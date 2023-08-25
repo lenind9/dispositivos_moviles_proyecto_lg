@@ -14,6 +14,7 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts.*
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.stringPreferencesKey
@@ -238,6 +239,27 @@ class MainActivity : AppCompatActivity() {
         client = LocationServices.getSettingsClient(this)
         locationSettingsRequest = LocationSettingsRequest.Builder()
             .addLocationRequest(locationRequest).build()
+
+        binding.swDarkModeMain.setOnCheckedChangeListener { _, isSelected ->
+            if(isSelected) {
+                enableDarkMode()
+            } else {
+                disableDarkMode()
+            }
+        }
+
+    }
+
+    // Habilita modo oscuro
+    private fun enableDarkMode(){
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+        delegate.applyDayNight()
+    }
+
+    // Deshabilita modo oscuro
+    private fun disableDarkMode(){
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+        delegate.applyDayNight()
     }
 
     // Guarda el usuario
