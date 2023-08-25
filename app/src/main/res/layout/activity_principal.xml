@@ -38,7 +38,7 @@
     <FrameLayout
         android:id="@+id/frm_container1"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"/>
 
     <FrameLayout
         android:id="@+id/frm_container"
@@ -51,12 +51,12 @@
         app:layout_constraintTop_toBottomOf="@+id/btnRetorno" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
-        app:itemIconTint="@drawable/icon_selected"
-        app:itemActiveIndicatorStyle="@style/ActiveIndicator"
         android:id="@+id/bottom_navigation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:itemActiveIndicatorStyle="@style/ActiveIndicator"
         app:itemIconSize="35dp"
+        app:itemIconTint="@drawable/icon_selected"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

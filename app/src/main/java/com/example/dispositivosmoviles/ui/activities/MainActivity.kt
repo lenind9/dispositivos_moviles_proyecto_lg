@@ -347,7 +347,7 @@ class MainActivity : AppCompatActivity() {
                 intent.putExtra("var2", 2)
                 startActivity(intent)
             }else{
-                var snackbar = Snackbar.make(binding.btnSignup,
+                var snackbar = Snackbar.make(binding.imgNotification,
                     "Usuario o contraseña inválidos",
                     Snackbar.LENGTH_LONG)
                 //snackbar.setBackgroundTint(ContextCompat.getColor(binding.root.context, R.color.principal_color_dm))
@@ -356,13 +356,11 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-
-
-        binding.btnTwitter.setOnClickListener {
+        binding.btnGoogle.setOnClickListener {
 
             locationContract.launch(Manifest.permission.ACCESS_FINE_LOCATION)
 
-            /*val intent = Intent(
+            val intent = Intent(
                 Intent.ACTION_WEB_SEARCH
             )
             //abre la barra de busqueda de Google
@@ -371,8 +369,8 @@ class MainActivity : AppCompatActivity() {
                 "com.google.android.googlequicksearchbox.SearchActivity"
             )
             //busca steam en el navegador
-            intent.putExtra(SearchManager.QUERY, "steam")
-            startActivity(intent)*/
+            //intent.putExtra(SearchManager.QUERY, "steam")
+            startActivity(intent)
         }
 
         val appResultLocal = registerForActivityResult(StartActivityForResult()) {
@@ -404,7 +402,7 @@ class MainActivity : AppCompatActivity() {
             sn.show()
         }
 
-        binding.btnFacebook.setOnClickListener {
+        binding.btnMic.setOnClickListener {
 
             val intentSpeech = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH)
             intentSpeech.putExtra(
@@ -423,6 +421,14 @@ class MainActivity : AppCompatActivity() {
 
             /*val resIntent = Intent(this, ResultActivity::class.java)
             appResultLocal.launch(resIntent)*/
+        }
+
+        binding.imgHuellaCam.setOnClickListener {
+            startActivity(Intent(this, BiometricActivity::class.java))
+        }
+
+        binding.imgNotification.setOnClickListener {
+            startActivity(Intent(this, ProgressActivity::class.java))
         }
 
     }

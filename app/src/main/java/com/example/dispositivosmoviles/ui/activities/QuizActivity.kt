@@ -5,12 +5,17 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.view.View
+import android.widget.Toast
+import androidx.activity.viewModels
+import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import com.example.dispositivosmoviles.R
 import com.example.dispositivosmoviles.databinding.ActivityQuizBinding
 import com.example.dispositivosmoviles.logic.data.MarvelChars
 import com.example.dispositivosmoviles.logic.marvelLogic.MarvelLogic
 import com.example.dispositivosmoviles.ui.adapters.MarvelAdapter
+import com.example.dispositivosmoviles.ui.viewmodels.ProgressViewModel
+import com.squareup.picasso.Picasso
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -26,6 +31,7 @@ class QuizActivity : AppCompatActivity() {
     private var score = 0
     private var tiempoRestante = 60000L // 1 minuto en milisegundos
 
+    private val progressViewModel by viewModels<ProgressViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,8 +54,8 @@ class QuizActivity : AppCompatActivity() {
         }
 
         // Inicia el juego
-        /*startNewRound(characterNames)
-        binding.textTimer.text = "Tiempo restante: 60 segundos"*/
+        startNewRound(characterNames)
+        binding.textTimer.text = "Tiempo restante: 60 segundos"
 
         // Configura los botones
         binding.btnOpcion1.setOnClickListener { checkAnswer(binding.btnOpcion1.text.toString()) }
@@ -63,18 +69,27 @@ class QuizActivity : AppCompatActivity() {
             //startNewRound()
         }
 
-    }
+        // LiveData
+        progressViewModel.items.observe(this, Observer {
+            val randomIndex = Random.nextInt(it.size)
+            val correctName = it[randomIndex]
 
-    private fun chargeDataRVAPI(limit: Int, offset:Int) {
-        lifecycleScope.launch(Dispatchers.Main) {
-            //rvAdapter.items = JikanAnimeLogic().getAllAnimes()
-            marvelCharsItems = withContext(Dispatchers.IO) {
-                return@withContext (MarvelLogic().getAllMarvelChars(
-                    offset, limit
-                ))
+            val shuffledNames = it.shuffled()
+            binding.btnOpcion1.text = shuffledNames[0].name
+            binding.btnOpcion2.text = shuffledNames[1].name
+            binding.btnOpcion3.text = shuffledNames[2].name
+
+            Picasso.get().load(it[randomIndex].image).into(binding.imgCharacter)
+
+            binding.textTimer.text = it[randomIndex].name
+
+        })
+
+        // Listener
+        binding.btnComenzar.setOnClickListener {
+            lifecycleScope.launch(Dispatchers.IO) {
+                progressViewModel.getMarvelChars(0, 100)
             }
-
-            //offset = offset+ limit;
         }
 
     }

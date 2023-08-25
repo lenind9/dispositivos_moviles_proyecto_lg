@@ -30,4 +30,7 @@
     <color name="turquoise">#2ABDBB</color>
     <color name="dark_turquoise">#167777</color>
     <color name="light_turquoise">#9CDFDF</color>
+    <color name="quiz_turquoise">#01B7CF</color>
+    <color name="fondo_ingresar">#2BA8D8</color>
+    <color name="letras_ingresar">#2C3792</color>
 </resources>

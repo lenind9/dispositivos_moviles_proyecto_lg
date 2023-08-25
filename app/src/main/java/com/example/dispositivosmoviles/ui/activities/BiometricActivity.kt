@@ -29,10 +29,10 @@ class BiometricActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.btnAutentication.setOnClickListener {
-            //autenticateBiometric()
-            lifecycleScope.launch {
+            autenticateBiometric()
+            /*lifecycleScope.launch {
                 biometricViewModel.chargingData()
-            }
+            }*/
         }
 
         // Cuando hay un cambio en isLoading, se ejecuta el observe
@@ -60,7 +60,7 @@ class BiometricActivity : AppCompatActivity() {
             val biometricPrompt = BiometricPrompt.PromptInfo.Builder()
                 .setTitle("Autenticación requerida")
                 .setSubtitle("Ingrese su huella digital")
-                .setAllowedAuthenticators(BIOMETRIC_STRONG or DEVICE_CREDENTIAL)
+                .setAllowedAuthenticators(BIOMETRIC_STRONG)
                 .setNegativeButtonText("Cancelar")
                 .build()
 

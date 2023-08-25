@@ -8,4 +8,6 @@
     <dimen name="marginTopPedidos"> 190dp </dimen>
     <dimen name="marginTop"> 15dp </dimen>
     <dimen name="marginBottom"> 15dp </dimen>
+    <dimen name="marginStartEnd">100dp</dimen>
+
 </resources>

@@ -14,9 +14,9 @@
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/logo_app"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher"
+        android:roundIcon="@mipmap/logo_app"
         android:supportsRtl="true"
         android:theme="@style/Theme.DispositivosMoviles"
         android:usesCleartextTraffic="true"
@@ -28,7 +28,7 @@
             android:name=".ui.activities.QuizActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.activities.ProgressActivity"
+            android:name=".ui.activities.CameraActivity"
             android:exported="false" />
         <activity
             android:name=".ui.activities.NotificationActivity"
@@ -39,10 +39,10 @@
             android:enabled="true" />
 
         <activity
-            android:name=".ui.activities.CameraActivity"
+            android:name=".ui.activities.BiometricActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.activities.BiometricActivity"
+            android:name=".ui.activities.ProgressActivity"
             android:exported="false" />
         <activity
             android:name=".ui.activities.ResultActivity"
@@ -51,10 +51,10 @@
             android:name=".ui.activities.DetailsMarvelItem"
             android:exported="false" />
         <activity
-            android:name=".ui.activities.MainActivity"
+            android:name=".ui.activities.PrincipalActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.activities.PrincipalActivity"
+            android:name=".ui.activities.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

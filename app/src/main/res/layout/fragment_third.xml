@@ -9,11 +9,11 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView2"
-        android:layout_width="300dp"
+        android:layout_width="250dp"
         android:layout_height="115dp"
         android:layout_marginTop="20dp"
         android:backgroundTint="@color/dark_turquoise"
-        app:cardCornerRadius="12dp"
+        app:cardCornerRadius="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
@@ -26,14 +26,11 @@
             android:gravity="center"
             android:orientation="vertical">
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:layout_marginHorizontal="10dp"
-                android:layout_marginBottom="10dp"
-                android:layout_weight="1"
-                style="@style/animeList"
-                android:text="Top MyAnimeList" />
+            <pl.droidsonroids.gif.GifImageView
+                android:layout_width="200dp"
+                android:layout_height="130dp"
+                android:layout_gravity="center_horizontal"
+                android:src="@drawable/rikka_takanashi" />
 
         </LinearLayout>
 

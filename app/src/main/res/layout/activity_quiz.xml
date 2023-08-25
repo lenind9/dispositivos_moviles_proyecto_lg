@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/light_turquoise"
     tools:context=".ui.activities.QuizActivity">
 
     <ImageView
@@ -11,6 +12,7 @@
         android:layout_width="350dp"
         android:layout_height="350dp"
         android:layout_centerHorizontal="true"
+        android:src="@drawable/quiz"
         android:layout_marginTop="40dp"
         android:layout_marginBottom="13dp"
         app:layout_constraintBottom_toTopOf="@+id/buttonsLayout"
@@ -35,6 +37,7 @@
             android:id="@+id/btnOpcion1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            style="@style/quizStyle"
             android:layout_marginBottom="8dp"
             android:text="Opción 1" />
 
@@ -42,6 +45,7 @@
             android:id="@+id/btnOpcion2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            style="@style/quizStyle"
             android:layout_marginBottom="8dp"
             android:text="Opción 2" />
 
@@ -49,6 +53,7 @@
             android:id="@+id/btnOpcion3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            style="@style/quizStyle"
             android:text="Opción 3" />
     </LinearLayout>
 
@@ -58,6 +63,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:layout_marginBottom="100dp"
+        style="@style/quizStyle"
         android:text="Comenzar"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
