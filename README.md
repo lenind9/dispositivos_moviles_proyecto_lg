@@ -60,8 +60,8 @@ Este proyecto de Android ofrece varias funcionalidades y características como:
 | ![MyAnimeList](images/MyAnimeList_oscuro.png) | ![biometrico](images/autenticacion_biometrica_oscuro.png) |![camara](images/camara_oscuro.png) |![progress](images/progressBar_oscuro.png) |
 |----------|:-------------:|:-------------:|:-------------:
 
-| ![notificacion](images/notificacion_oscuro.png) | ![noti](images/noti_oscuro.png) |
-|----------|:-------------:|:-------------:|:-------------:|
+| ![notificacion](images/notificacion_oscuro.png) | ![noti](images/noti_oscuro.png) |![Shimmer](images/Shimmer_oscuro.png) |
+|----------|:-------------:|:-------------:|
 
 ## Librerías Utilizadas
 **GIFs**
