@@ -101,7 +101,7 @@ Este proyecto de Android ofrece varias funcionalidades y características como:
 
 ## Instalación
 
-1. Clona este repositorio: `git clone https://github.com/TuUsuario/TuRepositorio.git`
+1. Clona este repositorio: `git clone https://github.com/lenind9/dispositivos_moviles_proyecto_lg.git`
 2. Abre el proyecto en Android Studio.
 3. Ajusta la configuración de tu proyecto utilizando tu archivo `google-services.json` proporcionado por Firebase.
 4. Compila y ejecuta la aplicación en un emulador o dispositivo.
